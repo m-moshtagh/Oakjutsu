@@ -1,0 +1,10 @@
+# Queues:
+Whenever we want to process a job in order of their creation or arrival we use Queues.
+
+# It is similar to stack but, it's FIFO.
+
+# This interface has lots of implementations but, mostly we use ArrayDeque and LinkedList class.
+
+# We also have PriorityQueues which process items based on their arrival, but based on their priority. for example in
+Java's built-in priority queue if we add random integers, when we pop dequeue them we see that they are sorted.
+We can implement Priority Queues using Heaps and arrays.

@@ -1,0 +1,85 @@
+                                           *** Introduction ***
+
+
+# Network:
+collection of computers and other devices that can send and retrieve data from each other almost in real time
+These devices are connected by wires and the bits of data turn into electromagnetic waves that move through these wires.
+however, wireless networks turn data into radio waves and, fiber optic wires send data in light waves.
+Any device in network is called node and fully functional computers are host.
+All Nodes in network have an Address & Texted Name.
+Data is transmitted in chunks called packets which hold data and some info about how when it is sent. checksum can be
+verified to see if packet was damaged or changed.
+Nodes have to stick to a protocol in order to communicate in network. a set of standard rules to apply how they need to
+behave. HTTP is a protocol defines how browsers and servers communicate. The kind of end device doesn't matter, only
+protocol matters.
+
+# Layers of network:
+Sending packet through network is complicated so we decouple it to several section to solve the problems easily.
+- TCP model: Application layer, Transport layer, Internet layer and, The host to network layer(Ethernet, WI-FI, LTE...)
+*Example: The flow of a browser request to a  webserver looks like this:
+1) By sending a request browser is talking to transport layer on local client machine.
+2) The transport breaks req to TCP segments and adds sequence and checksums and send it to local internet layer.
+3) Internet layer slices segments into IP datagram and passes it to wires.
+4) The host to network layer encodes the digital data to analog and sends it to the server.
+5) The host to network layer decodes the analog to digital data and passes IP datagrams to Internet layer.
+6) The internet layer checks the integrity and reassembles slices and passes data to transport layer.
+7) The transport layer checks to see if all data is arrived and sends it to web server in app layer then sends the response
+through layers like this.
+NOTE: All these operations with much more detail specially host to network layer is hidden for application layer.
+NOTE: All we need to know about a host to network layer is that it's a physical layer.
+
+# Internet Layer(network layer):
+This layer is responsible to make packets and addressing scheme with IP. Java only understands IP.
+We have IPv4 32 bits & IPv6 128 bits. These two are different protocols and do not interoperate without special gateways
+or protocols.
+This layer also enables different host to network layers to talk to each other. routers translate between WI-FI and
+Ethernet, Ethernet and DSL, DSL and fiber optic and so on.
+
+# Transport Layer:
+This layer is responsible to check the integrity of packets and if a packet is corrupted, ask the sender to retransmit
+the packet. Here it adds additional header. We have TCP & UDP in this layer. TCP is reliable protocol and is slower than
+UDP.
+
+# Application Layer:
+This layer decides what to do with data after its transferred. HTTP protocol makes sure browser displays a graphic image
+We also have SMTP, IMAP, POP, FTP, FSP, TFTP, NFS, Gnutella, BitTorrent, SIP & Skype.
+NOTE: Java only understands IP and TCP & UDP and all other application layer protocols built on top of these. other
+protocols like ICMP, IGMP, ARP, RARP, RSVP can be implemented by linking to native code.
+
+# IP addressing & DNS:
+IP consists of 4 byte numbers. each range from 0 to 255. every computer on a IPv4 network has a unique address.
+Packet has the IP of computer sent it and the destination IP.
+IPv6 consists of eight blocks of four hex digits seperated by colons. Leading zeros do not need to be written.
+Java also needs to understand Hostnames alongside IP addresses.
+IP addresses that start with these are unassigned.
+- 10.
+- 172.16
+- 172.31
+- 192.168
+IP addresses with 127 | ::1 are referring to local.
+0.0.0.0 and 8 zero bits are referred to as host on local network.
+The addresses which have the same 4 bytes are used for broadcasting 254.254.254.254
+
+# Ports:
+To do different tasks addition to Address we need ports so email should work on different port than ftp.
+A computer with ip has several thousands logical ports. (65535) each can be allocated to a different service.
+Ports from 1 to 1023 are reserved for well known services.
+on Linux and Mac only root privilege can receive data from a port but every one can send data to port.
+
+# Internet:
+The largest network of computers with IP addresses globally.
+
+# Internet Address Blocks:
+ISP will assign an ip with a subnet that a limited number of computers can be directly accessible on internet.
+NOTE: lowest ip and the most is used for identifying network and broadcast.
+
+# Network Address Translation:
+Local devices have a local IP that is not accessible by outside of network. But ISP gives us an IP address that if
+we configure NAT it will translate all requests to that ip to our local IP.
+
+# FireWalls:
+Hardware or Software interface which checks IP and ports and restrict them.
+
+# Proxy Servers:
+Sometimes access to certain resources are limited. We can send our request to proxy servers and, they will return the
+result to us. This can also be used as cache server.

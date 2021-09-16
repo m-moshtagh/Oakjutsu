@@ -1,0 +1,7 @@
+# Linear Search:
+This is simple search we use everyday by iterating over list and return index if we find it or return -1 if we don't
+find it.
+Time complexity:
+- Best case : O(1)
+- Worst case: O(n)
+NOTE: this is a slow algorithm, it's better to use other algorithms.

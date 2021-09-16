@@ -1,0 +1,10 @@
+# TernarySearch:
+This is like binary search but instead of divide it into two part we divide it into three part.
+We need two pointers for this job, first we need to calculate partition size:
+> partitionSize = (left - right) / 3;
+then we can calculate mid1 & mid2:
+> mid1 = left + partitionSize;
+> mid2 = right - partitionSize;
+
+Time complexity is: O(log3 n) ==> base is three.
+NOTE: binary search is faster than ternary search because it requires fewer comparisons.

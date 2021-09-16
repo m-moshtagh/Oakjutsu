@@ -1,0 +1,48 @@
+                                           *** Common Code Smells ***
+
+# Poor names:
+We should never choose identifiers somehow that we need to visit the implementation or somewhere else to understand.
+We need to avoid meaningless names.
+We need to avoid names with encodings.
+Ambiguous names are prohibited.
+Some noisy names like listOfApprovedCustomers should be renamed to approvedCustomers.
+NOTE: It's always recommended using the specific naming convention of the language.
+
+# Poor Method Signatures:
+We need to always check for single responsibility in a component. A method signature also need to be relevant in case
+of return type, method name and parameters. for example a method called parse needs to map a type to another so, a void
+return type is not applicable.
+We should also, check the parameters. we shouldn't pass unnecessary parameters. It's recommended to have less than 3
+parameters. One way to refactor this is to extract some of params that are related to a local or public class then we
+can take that class as a parameter.
+Whenever we find code which is doing a standalone task we can extract a method from it.
+
+# Instance Variable:
+We need to make as much as possible local variables and just make instance variables when we use them globally or in
+most of class's methods.
+
+# Magic numbers:
+There are times when we declare conditions that tell if foo is 1 do something or array capacity. These numbers are
+not clear. We can declare constants or declare enumerations which is better and can be reused.
+
+# Nested Conditionals:
+It's always more efficient to use ternary operator wherever possible. This is much readable.
+When we have multiple conditions we can use combine technique with && || to make it much readable.
+When we have some negate situation it's better to declare our falsy declarations and after that we can write our correct
+statement.
+
+# Open close principle:
+- Open for extension
+- Close for modification
+
+# DRY(Don't Repeat Yourself)
+
+# Comments:
+The ultimate comment on code should be the code itself.
+- Don't write comments, rewrite your code
+- Don't explain what's obvious
+- Explain Why's & How's
+
+# Long methods:
+
+

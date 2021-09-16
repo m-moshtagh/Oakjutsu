@@ -1,0 +1,74 @@
+# Trees:
+Trees play a big roll in CS. We can see them in databases, UI design and so on.
+A tree is a data structure that stores data in a hierarchy. we refer to these elements as nodes and lines that connect
+them are edges. Each node contains a value or data.
+Top node is called Root. It can have multiple children. We refer to these children as leaf nodes.
+
+# Binary Tree:
+Nodes of tree can have maximum of two children.
+
+# Usage:
+- We can use them to represent hierarchical data like organization chart.
+- Databases use tries for indexing in order to lookup data quickly.
+- Implementing Autocompletion for example chrome stores queries on a tree and when we want to search it tries to match
+it with one of those queries.
+- Compilers use special kind of tree called syntax tree to parse expressions.
+- Trees are also used in compression algorithms like JPEG & MP3.
+
+# Binary search tree:
+In this tree the value of any node is always greater than it's left child and less than the value of it's right child.
+Also, the values of any left subtrees are also less than our specific node and, similarly all the nodes and sub tries on
+right side are greater. This helps us find elements by not traversing the whole tree or structure.
+This is called Logarithmic Time complexity because we throw half of our tree with each comparison.
+For insertion & removing, we also have Logarithmic time.
+
+# Traversing A tree:
+Unlike linear data structures we can't start from first node in tree and go to the last element. Here we have to type
+of traversing:
+- Breadth search: Here we get traverse depending on the levels of children, we can start from top or down. for example:
+            7
+         5     9
+       3   6  8  12
+with breadth search the traverse order will be: [7 5 9 3 6 8 12]
+In order to implement levelOrder traverse we can use height of the tree and getNodes of each height level and traverse
+it.
+
+- Depth Search: In this type we start from the depth. we have three ways to do this:
+* pre-order: [root left-child right-child] -> [7 5 3 6 9 8 12]
+* mid-order: [left-child root right-child] -> [3 5 6 7 8 9 12]
+* post-order: [left-child right-child root] -> [3 6 5 8 12 9 7]
+
+# Recursion: Another way to implement cycles in code instead of loops is to use recursion. in this method we use the
+method to call itself. But in order to prevent infinite cycle, we need to specify a rule to break the recursion.
+
+# Height & Depth:
+When we are moving down from a node to its children if we count the edges we can find the depth. for example
+roots depth is 0 and in above the depth of 6 is 2
+When we are moving from leaves upward the longest path to that node is the height. and the height of root is the height
+of the whole tree.
+for implementing height we use recursion and, we can achieve it by formula -> 1 + max(height(L), height(R))
+this is so much like post traversing because we traverse leaves first.
+So in above case the height of tree is 2
+
+# Min value of tree
+We have two conditions here:
+1) Our tree is just a binary tree
+2) Our tree is binary search tree
+in case 1 we have to compare each leaf and come to top and return the value. we can do this by recursive approach
+in case 2 we can use mid-order traverse approach and return the most left leaf.
+We have implemented both approaches: private min() method is for approach 1 and public one is for approach 2.
+
+# Equality:
+In order to implement this we want to check the equality of two nods and move on. We have three conditions:
+Both are null, They are equal, so we need to compare their leaves and other one is that none of above cases pass.
+
+# Validating binary search tree:
+To validate binary search tree We need to traverse the tree and check if the left children are smaller than the root
+and, right children are greater. the problem here for recursion is that if we try to check one node, when we move on
+to its subtree, we have to check the nodes that we previously checked.
+so here we need to specify range for each node for example for left nodes they can be (-infinity, root)
+and for right nodes (root, +infinity)
+
+# Printing nodes at given (k) distance from root:
+In order to implement this, we have to go from root and each level we go further we decrease the distance and when
+we reach distance 0 we can add them to list and return it.

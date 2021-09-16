@@ -1,0 +1,6 @@
+# Merge Sort:
+This is Conquer & Divide algorithm, which we try to divide array into one index array and merge them.
+Time complexity of this algorithm is O(n log n)
+The space complexity of this algorithm is O(n)
+NOTE: we have in-place implementation of this algorithm which is space efficient.
+

@@ -1,0 +1,10 @@
+# Bubble Sort:
+In this sort we try to compare current index with next index and swap them if the first one is bigger. we continue
+till we reach end of array, We can see that we moved the largest element to the end of array. we can iterate again
+till the array is fully sorted by bubbling larger element up.
+In order to boost this algorithm:
+- We make sure we don't compare to the sorted part of array next iteration.
+- We define an isSorted Flag so if the array is sorted we don't go through all the stuff.
+
+Time complexity:
+Best case is O(n), Worst case is O(n^2)

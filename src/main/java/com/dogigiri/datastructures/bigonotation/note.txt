@@ -1,0 +1,29 @@
+# Big O Notation
+This is a concept to describe the performance of an algorithm.
+
+# constant time O(1):
+Arrays have indexes so, we can always access any element directly. it doesn't matter the number of times we call
+this operation, it will always be O(1).
+int[] numbers; numbers[25]
+
+# Linear time O(n)
+When we try to iterate over an array and print the elements or do another thing. we are going through the whole
+array. this time complexity is called Linear time.
+*: in computation of Big O notation we don't care about constants or if we have two iteration over two different
+inputs, the notation would be O(n + m) so we take as O(n)
+
+# Quadratic time O(n^2)
+When we try to iterate inside our loop to print the all combination of our Array elements we are having a
+O(n * n) which is a quadratic time complexity.
+for(var i: Array[])
+    for(var j: Array[])
+
+# Logarithmic time O(log n)
+these algorithms are even more curved than linear which  makes them more efficient and scalable. In these algorithms
+we, narrower our steps by half every step like binary search.
+
+# Exponential time O(2^n)
+These algorithms are reverse of algorithmic type which  makes them less efficient.
+
+# Space complexity
+There's big tradeoff between runtime complexity and space complexity. 

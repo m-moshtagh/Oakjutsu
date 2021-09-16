@@ -1,0 +1,13 @@
+# reverse String:
+we can use a stack or iterate the string backwards.
+NOTE: because of String mutability if we try  to append a character to String everytime we are creating a new String
+So it's better to use StringBuilder class.
+NOTE: Iteration approach is better than stack one.
+
+# reverse word order:
+We have three approaches here:
+- split() the string, then iterate it in reverse order and append it with whitespace using string builder and return
+the trim() version of the result.
+- We can use stack
+- We can split() the string and use Collections.reverse() method and pass a list to it. At last for space between
+words we can use String.join() method.

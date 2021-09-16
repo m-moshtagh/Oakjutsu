@@ -1,0 +1,74 @@
+                                            *** IP Addresses ***
+
+# Nodes: devices on the network
+
+# Hosts: Computer devices on the network
+
+# Each node is identified by unique address called Internet address or IP.
+We have V4 which is 4 bytes & V6 which is 16 bytes. Both of these are ordered sequences of bytes like arrays.
+V4 is written as 4 unsigned bytes ranging from 0 to 255 seperated by dot.
+V6 is written as 8 block of 4 hexadecimal digits seperated by colon. leading zeros can also be ignored and just
+writen as one zero. we can also write colons instead of 0 blocks. also, we can write last 4 byte as ipv4.
+
+Though IP addresses are hard to remember we have DNS to assign hostname to an IP address.
+
+# InetAddress class:
+This class is high level representation of Ip address. no matter which version. it also includes hostname.
+To initialize this class we don't have any constructors, but we have static factory methods.
+- getName()         ->          connects to a local dns server to resolve hostName if not found in cache connects to internet.
+if not found throws UnknownHostException
+
+InetAddress class caches successful Host lookup addresses. unsuccessful lookups will be cached for 10 seconds This can
+be configured with network address.cache.negative.ttl
+
+We can create InetAddress object for hosts that we can't access by calling getByName() and pass IP address to it. This
+won't check with DNS.
+A DNS lookup for the hostname is only performed when the hostname is requested.
+
+NOTE: hostname is more stable than IP address. Because the hostname may be constant and ip may change. So we should
+only use IP when hostname is not available.
+
+This class has 4 getter methods which return hostname as string and ip as both string and byte array.
+- getHostName(): returns both hostname & IP address and if there's no hostname, or somehow it is prevented a dotted quad
+format of the IP address is returned.
+- getCanonicalHostName(): This will call DNS and replace the cached hostname.(If it can reach DNS)
+NOTE: This can convert the dotted quad address 208.201.239.37 into a hostname by using InetAddress.getByName() and then
+applying getCanonicalHostName() on the resulting object. (example 4-3 in book)
+- getAddress()
+- getHostAddress(): Returns the dotted format of address of the current machine.
+
+NOTE: There is no setter method in InetClass which makes it immutable && Thread safe and also prevents outside classes to
+change an InetAddress Instance.
+
+We have 10 methods to determine the range and class of IP addresses:
+- isAnyLocalAddress(): This method returns true if the address is a wildcard address(0.0.0.0, ::) which matches any
+addresses on local system.
+- isLoopBackAddress(): Checks if the IP is a loopback which allows us to connect to current system by ignoring physical
+layer.(127.0.0.1, ::1)
+- isLinkLocalAddress(): Checks if the address is a IpV6 link local address. This ip is a utility like DHCP for V6 but
+without a server.
+- isSiteLocalAddress(): These are like link local addresses but with difference that they can be forwarded by routers.
+- isMulticastAddress()
+- isMCGlobal()
+- isMCNodeLocal()
+- isMCLinkLocal()
+- isMCSiteLocal()
+- isMCOrgLocal()
+
+This class also has isReachable() method to test if the network is accessible or not.
+
+NOTE: two InetAddress objects are equal if their IP address(not hostname) are equal.
+
+# NetworkInterface Class:
+This class represents local IP addresses. This can be a physical interface or virtual interface. This class provides
+methods to enumerate over all Local IP addresses and also create InetAddress Instances from them. These InetAddress can
+be used to create Sockets.
+
+This class has factory methods which we can pass interface name or just create it by enumeration if the corresponding
+interface is not available it will return null and If it fails it will throw SocketException.
+NOTE: lo represents loop back address in windows it's ELX100 and CE31.
+
+This class has three getter methods:
+- getInetAddresses()
+- getName()
+- getDisplayName(): this method returns more friendly name for interface in windows platform.

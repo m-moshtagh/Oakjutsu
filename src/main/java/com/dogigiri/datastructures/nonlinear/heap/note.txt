@@ -1,0 +1,47 @@
+# Heaps(Binary Heap):
+Heap is complete binary tree which  means all the leaves in last level should be maximum or one less from left to right.
+            *                           *
+       *         *                 *           *
+     *    *    *                *     *      *    *
+
+Heap should satisfy the heap property.
+
+#Heap property: This means all the leaves of current node must be equal or smaller.
+
+- Max heap: means the root node holds the largest value.
+- Min heap: means the root node holds the smallest value.
+
+# Usage:
+- Sorting data(HeapSort)
+- Implementing Graph algorithms(The Shortest path)
+- Implementing Priority Queues
+- Finding the Kth smallest/largest value.
+
+# we add nodes to heap and when we went to a case that violates heap property, we use BubbleUp which means swap the node
+with the root of the tree(subtree)
+NOTE: In max heap we use bubble up but, in min heap we use bubble down.
+
+# Time complexity: is equal to search a value in binary tree which is O(log n) because the maximum comparison we need is
+equal to height of the tree.
+
+# Finding max & min is O(1) depending on which kind of heap we are using.
+
+# Remove from max heap:
+We only remove root and, we should use the last leaf and put in root. then we need to bubble down with the largest child
+till the heap property is satisfied.
+
+# Implementing:
+formula for finding left & right child index:
+left = parent * 2 + 1
+right = parent * 2 + 2
+parent = (index - 1) / 2
+
+# Heap sort:
+We can sort array if we insert its values in heap and remove it.
+
+# Priority Queue:
+We can also create our priorityQueue with heap to reduce insert time complexity to O(log n) and increase remove
+time complexity to O(log n).
+
+# Heapify:
+We want to turn array to heap

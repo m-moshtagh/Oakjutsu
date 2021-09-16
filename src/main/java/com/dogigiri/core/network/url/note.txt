@@ -1,0 +1,288 @@
+                                              *** URL & URI ***
+We use URL & URI to locate resources on network. URL is the most common URI to use.
+
+# URI:
+Set of Strings in a particular syntax which identifies a resource and a resource is a thing which is identified by a URI
+The syntax of a URI is consisted of a scheme and scheme-specific-part seperated by a colon.
+> scheme:scheme-specific-part
+The scheme can be a:
+- Data: Base64 encoded data included directly in a link
+- File: a file on a local disk
+- ftp: an FTP server
+- http
+- mailto
+- magnet
+- telnet
+- urn: Uniform resource name
+NOTE: Java also has some custom schemes like: RMI, JNDI, Jar, Doc for various purposes.
+
+The scheme-specific-part is like this:
+> //authority/path?query
+The authority part is actually the server responsible to resolve the address of the resource.
+
+# URL:
+A URL is a URI that, as well as identifying a resource provides a specific network location for the resource.
+Java URI class can only identify a resource on network. URL class can both identify and retrieve resources.
+The URL consists of Protocol to used to access server, hostname or IP address of the server and path to the resource
+on the server.
+> protocol://userInfo@host:port/path?query#fragment
+
+# Relative URLs:
+Some Urls can inherit from their super URL. For example, we are trying to access
+http://www.java.com/projects/cuncurrency.html. now if we provide a link like this:
+<a href= "thread.html" > the corresponding URL will be http://www.java.com/projects/thread.html
+NOTE: if we use / it will address from the root of the project. for example, we use this hyperlink:
+<a href= "/about/main.html"> The address will look like this: http://www.java.com/about/main.html
+
+# URL class in Java:
+java.net.URL is abstraction of URL. it's a final class and relies on Strategy pattern to configure different instances of
+URLs. This class is also Immutable. Each section of the URL can be constructed using their own fields.
+
+We can create Instances via various constructors. The main protocols we use is http but Java supports multiple of them.
+if there's a protocol that is not supported in VM, we can install a protocol Handler to communicate with it. But it's
+so much trouble.
+
+Java doesn't check the correctness of the URL and this validation is on programmer.
+
+If the construction goes wrong it will throw MalformedUrlException.
+
+We can also create a URL instance with its component parts.
+public URL(String protocol, String hostname, String file)
+NOTE: the file string should start with / and there's another overloaded one which accepts a port if we don't want to
+use the default port.
+
+There's also another URL which takes an absolute URL and path to other file and reconstructs new URL from that. this
+is useful when parsing an HTML file.
+
+In order to retrieve data from the URL class has several methods:
+- openStream()
+- openConnection()
+- openConnection(Proxy proxy)
+- getContent()
+- getContent(Class[] classes)
+
+The most used thing is openStream method but, if we need more control over this we can use openConnection() which gives
+us a URLConnection object.
+
+NOTE: The openStream() method returns raw data from the link. ASCII if we are reading an ASCII file, raw HTML, binary
+image data it doesn't include any HTTP headers or protocol related information.
+
+NOTE: in order to detect encoding of the data on a URL or get HTTP headers we need to use openConnection() which returns
+URLConnection object.
+
+OpenConnection() opens a Socket on a resource and the OpenConnection represents an open connection to a network resource.
+We use this method when we want to communicate directly to a server. This gives us access on all the things that are
+returned by the server.
+The URLConnection allows us to write into the URL as well as reading it for example we can send email to a mailto URL
+or post form data.
+The overloaded variant of this method allows us to pass a proxy server.
+
+getContent() method retrieves the data and tries to cast it to an appropriate Object in Java for example text or HTML
+will be inputStream and Images and Gif or JPEG will be cast to java.jwt.Image class. This method tries to cast using
+the content-type in header. If the content-type is unfamiliar it will cast it to a sort of inputStream so, we can read
+it.
+There's also another one which returns Class[] array.
+
+Splitting URLs:
+URLs are composed of five sections:
+* Scheme or protocol
+* authority
+* path
+* ref or section or also referred to as fragment identifier
+* query string
+> http://www.ibiblio.org/javafaq/books/jnp/index.html?isbn=1565922069#toc
+scheme: http, authority: www.ibiblio.org, path: /javafaq/books/jnp/index.html, fragment identifier: toc and
+query: ?isbn=1565922069
+NOTE: some URLs may lack some sections.
+NOTE: The authority may be divided to user info, host and the port.
+
+Java methods:
+* getProtocol(): returns the scheme of the URL.
+* getHost(): returns hostname of the URL.
+* getPort(): returns port number as an integer. if nothing specified in URL returns -1.
+* getDefaultPort(): returns default port number used by the scheme.
+* getFile(): returns path of the URL from / till #.
+* getPath(): returns path excluding query string.
+* getRef(): returns fragment identifier part of the URL.
+* getQuery(): returns the query string part of the URL null if it doesn't exist.
+* getUserInfo(): if URL contains user info returns it otherwise returns null. For mailto URL is not the same.
+* getAuthority(): gets Authority part of the URL.
+
+Equality & Comparison:
+This class implements hashcode & equal methods but has some tricky parts here. It doesn't implement Comparable.
+It's not recommended to store URL class in Hashtable. URI is more preferable.
+
+NOTE: The URL class is preferable when we want to download a content from a server.
+Conversion:
+This class also has toString(), toExternalForm() and toURI() methods. it's not common to use toString() method, but we
+use toExternalForm() to create a String to use in HTML forms and ...
+
+# The URI class
+This class has three major differences from URL:
+* this class is purely about identification of resources and parsing URIs. it provides no method for retrieving a
+representation of the resource identified by the URI.
+* The URI class is more conformant to the relevant specifications than the URL class. (XML)
+* A URI object can represent a relative URI. The URL class absolutes all URIs before storing them.
+NOTE: it's always preferable to use URL class to download content and use URI class to parse and manipulation. we can
+always convert both to each other.
+
+Constructing URI:
+* URI(String uri):
+  This constructor creates a URI from a string and if the syntax is wrong, it will throw URISyntaxException.
+* URI(String scheme, String schemeSpecificPart, String fragment):
+  It's for non-hierarchical URIs. The scheme part is URI protocol. passing null for this value will omit the Scheme and
+  is for relative URIs. The third argument contains fragment identifier.
+* URI(String scheme, String host, String path, String fragment):
+  This is for hierarchical URIs such as http and ftp
+* URI(String scheme, String authority, String path, String query, String fragment)
+* URI(String scheme, String userInfo, String host, int port, String path, String query, String fragment)
+
+NOTE: we also have a static create() function which can create a URI and does not check the syntax and throw exception.
+
+Parts of the URI(Splitting):
+* getScheme()
+* getSchemeSpecificPart()
+* getRawSchemeSpecificPart()
+* getFragment()
+* getRawFragment()
+NOTE: Raw methods return encoded parts of the URI while the others first decode any percent escaped characters then
+return the decoded part.
+NOTE: A URI with a scheme is an absolute URI and a URI without a scheme is a relative URI. if the fragment identifier is
+omitted it's a pure URI.
+* isOpaque(): returns false if the URI is hierarchical and true if it's not.
+A URI is opaque if, and only if, it is absolute and its scheme-specific part does not begin with a slash character ('/').
+according to java doc: "An opaque URI has a scheme, a scheme-specific part, and possibly a fragment; all other components
+are undefined."
+if the URI is opaque all we can get is scheme, schemeSpecificPart and fragment identifier. however, if the URI is
+hierarchical there are getter methods for the parts.
+* getAuthority()
+* getFragment()
+* getHost()
+* getPath()
+* getPort()
+* getQuery()
+* getUserInfo()
+NOTE: these methods return decoded parts it means they return the representation of the escape characters like %3C -> <
+we need to use raw methods in order to get encoded form of them.
+NOTE: ports and hosts are guaranteed to always be ASCII characters so, we don't have raw methods for them.
+NOTE: Java can't always detect syntax errors in authority part. We can call parseServerAuthority() to force the authority
+to be parsed again.
+NOTE: URI objects are Immutable.
+
+Resolving Relative URIs:
+* URI resolve(URI uri)
+* URI resolve(String URI)
+* URI relativize(URI uri)
+Invoking a relative URI by a absolute URI the result may seem like this:
+URI absolute = new URI("http://www.example.com/");
+URI relative = new URI("images/logo.png");
+URI resolved = absolute.resolve(relative);
+NOTE: if the absolute is "http://example.com" & the relative is "help/index.jsp" the resolved URI will be:
+"http://example.com/help/index.jsp";
+NOTE:  relativize() method is different, We can extract the relative part of URI with it. the argument we pass is the
+absolute part of the URL.
+
+Equality & Comparison:
+Equal URIs must both be opaque or hierarchical. The authority and scheme part are compared without considering case. The
+rest is compared case-sensitive.
+Equal URIs have same hashcode. URI also implements Comparable.
+
+String Representation:
+* toString(): turns URI into one unencoded String.
+* toASCIIString(): turns URI into one encoded String.
+
+NOTE: Java provides URLEncoder & URLDecoder classes to cipher strings in proper format.
+
+# URLEncoder:
+To URL encode a string, pass the string and the character set name to the URLEncoder.encode().
+> String encoded = URLEncoder.encode("This*string*has*asterisks", "UTF-8");
+Any non‐ alphanumeric characters are converted into % sequences (except the space, underscore,
+hyphen, period, and asterisk characters). It also encodes all non-ASCII characters. The
+space is converted into a plus sign. it also converts tildes, single quotes, exclamation points, and parentheses to
+percent escapes, even though they don’t absolutely have to be.
+
+NOTE: We should always use UTF-8. is compatible with the IRI specification, the URI class, modern web browsers,
+and more additional software than any other encoding you could choose.
+
+NOTE: This encoder can't distinguish a URL part so, we need to separate the parts ourselves.
+
+# URLDecoder:
+We can decode() an entire URL using this method using UTF-8 unlike URLEncoder.encode()
+
+# Proxies:
+System Properties:
+all you have to do is set a few system properties to point to the addresses of your local proxy servers.
+set
+http.proxyHost to the domain name or the IP address of your proxy server and http.proxyPort to the port of the proxy
+server (the default is 80).
+There are several
+ways to do this, including calling System.setProperty() from within your Java code or using the -D options when
+launching the program.
+If the proxy requires a username and password, you’ll need to install an Authenticator.
+If you want to exclude a host from being proxied and connect directly instead, set the
+http.nonProxyHosts system property to its hostname or IP address. To exclude multiple hosts, separate their names by
+vertical bars.
+> System.setProperty("http.proxyHost", "192.168.254.254");
+  System.setProperty("http.proxyPort", "9000");
+  System.setProperty("http.nonProxyHosts", "java.oreilly.com|xml.oreilly.com");
+
+You can also use an asterisk as a wildcard to indicate that all the hosts within a particular domain or subdomain should
+not be proxied.
+> % java -Dhttp.proxyHost=192.168.254.254 -Dhttp.nonProxyHosts=*.oreilly.com
+  <emphasis role="bolditalic">com.domain.Program</emphasis></programlisting>
+NOTE: if we have ftp proxy we can replace http with ftp.
+NOTE: Java provides SocksProxy host and port options for properties but doesn't provide any non-proxying socks.
+
+Proxy class:
+There are still only three kinds of proxies, HTTP, SOCKS, and direct connections (no proxy at all), represented by three
+constants in the Proxy.Type enum:
+* Proxy.Type.DIRECT
+* Proxy.Type.HTTP
+* Proxy.Type.SOCKS
+
+Each running virtual machine has a single java.net.ProxySelector object it uses to locate the proxy server for different
+connections.
+The default ProxySelector merely inspects the various system properties and the URL’s protocol to decide how to connect
+to different hosts However, you can install your own subclass of ProxySelector in place of the default selector and use
+it to choose  different proxies based on protocol, host, path, time of day, or other criteria.
+The key to this class is abstract select method. The other one is connectFailed() callback method.
+
+Communicate with Server-side programs through GET:
+The URL class makes it easy for Java applets and applications to communicate with server-
+side programs such as CGIs, servlets, PHP pages, and others that use the GET method.
+POST is done with URLConnection class.
+All names and values must be x-www-form-url-encoded—as by the URLEncoder.encode() which we discussed.
+NOTE: We can determine what to send as query in documentation of APIs.
+All you have to do is create a query
+string that includes the necessary name-value pairs, then form a URL that includes that
+query string. Send the query string to the server and read its response using the same
+methods you use to connect to a server and retrieve a static HTML page.
+> QueryWebsiteDemo class is the example.
+
+Accessing password-protected sites:
+WE can access HTTP authentication based classes easier than cookie based ones.
+* Authenticator class:
+  it's an abstract class which we need to subclass it. To make the URL class use the subclass, install it as the default
+  authenticator by passing it to the static Authenticator.setDefault() method. when the URL class needs a username and
+  password, it will ask the DialogAuthenticator using the static Authenticator.requestPasswordAuthentication() method.
+  The Authenticator subclass must override the getPasswordAuthentication() meth‐
+  od. Inside this method, you collect the username and password from the user or some
+  other source and return it as an instance of the java.net.PasswordAuthentication.
+  If you don’t want to authenticate this request, return null, and Java will tell the server
+  it doesn't know how to authenticate the connection. If you submit an incorrect username
+  or password, Java will call getPasswordAuthentication() again to give you another
+  chance to provide the right data. You normally have five tries to get the username and
+  password correct; after that, openStream() throws a ProtocolException.
+  Usernames and passwords are cached within the same virtual machine session. Once
+  you set the correct password for a realm, you shouldn’t be asked for it again unless you’ve
+  explicitly deleted the password by zeroing out the char array that contains it.
+
+* PasswordAuthentication class:
+  PasswordAuthentication is a very simple final class that supports two read-only properties: username and password.
+  The username is a String. The password is a char array because strings need to be garbage collected if we don't use
+  their reference.
+
+* JpasswordField class:
+  A swing class Which we can use.
+> Complete example is 5-12 on Elliot Rusty Harold Orielly book.
+

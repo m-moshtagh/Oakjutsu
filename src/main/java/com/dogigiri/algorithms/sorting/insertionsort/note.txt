@@ -1,0 +1,6 @@
+# Insertion Sort:
+This is the algorithm we automatically use when we want to sort cards. we take one card and put it in its appropriate
+place.
+The technique we use is shifting. we store the index value and compare it with sorted part and, we shift the elements
+till we find the correct place.
+Time complexity in the best case scenario is O(n) & the worst case scenario is O(n^2). It's like Bubble sort.

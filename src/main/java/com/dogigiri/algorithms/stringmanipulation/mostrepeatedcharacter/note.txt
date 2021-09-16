@@ -1,0 +1,8 @@
+# Finding Most Repeated Character in String:
+We can use two Approaches:
+- Using a HashMap to store characters and their count.
+- Using int array and ASCII table.
+The second one is a bit tricky. each character has a numeric value in ASCII table.
+We can define an array with size of magic number 256. when try to access array[char] this will
+use character's numeric type and point to that place. We can increment the value of it. and at last we can
+return the max value.

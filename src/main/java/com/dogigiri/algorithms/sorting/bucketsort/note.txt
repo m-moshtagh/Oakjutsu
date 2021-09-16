@@ -1,0 +1,16 @@
+# Bucket Sort:
+The idea of this sort algorithm is to distribute this numbers into multiple buckets and sort these buckets using
+another sorting algorithm and then combine them. With this approach, instead of sorting a large array, we sort
+smaller buckets and, it is much more efficient. Because we can sort them in parallel.
+
+The number of buckets we allocate, will affect the memory usage. we put items in bucket using this formula:
+bucket = item / numberOfBuckets
+Then we sort each row of bucket and then merge them in main array.
+NOTE: each item in our Bucket is a linked list.
+Space complexity is O(n + k)
+Time complexity:
+- Distribution O(n)
+- Iterating bucket O(k)
+- Sorting O(1)
+- Total Best is O(n) worst is O(n^2)
+NOTE: more buckets result in linear bud fewer result in n^2

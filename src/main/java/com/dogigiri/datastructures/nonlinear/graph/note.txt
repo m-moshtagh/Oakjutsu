@@ -1,0 +1,70 @@
+# Graphs:
+We use graphs to demonstrate connected objects such as routers in network, or people on a social media platform. like
+trees, graphs consist of nodes and edges.(Tree is a kind of graph, without any cycles and root node)
+Nodes are also called vertex. There is no limitation on how many connection a node can have.
+To directly connected nodes are Adjacent or neighbors.
+if edges have direction, we call it a directed graph. Directed graphs are like Twitter but undirected graphs are like
+Facebook or LinkedIn.
+Edges can also have a weight, we use it to indicate how strong a connection is.
+another application of graphs is to find the shortest path between two nodes.
+
+# Various ways of implementing graphs:
+- Adjacency Matrix or 2D array:
+We can see how nodes are connected. so for every node in our graph we are going to have a row and a column. If two nodes
+are connected we mark their intersection with 1 or 2. The complexity:
+Space          O(v^2)
+Add Edge       O(1)
+Remove Edge    O(1)
+Query Edge     O(1)
+Find neighbors O(v)
+Add Node       O(v^2)
+Remove Node    O(v^2)
+
+- Adjacency List:
+This is an Array of LinkedList. The LinkedList contains adjacent nodes or the neighbors of a given node. So instead of
+matrix to store all combination of edges, we only store the edges that exist. We have a hashtable for finding the index
+of a node. This is more space efficient than the matrix. The complexity:
+Space          O(v + e)
+Add Edge       O(k)
+Remove Edge    O(k)
+Query Edge     O(k)
+Find neighbors O(k)
+Add Node       O(1)
+Remove Node    O(v^2)
+
+NOTE: Dense graph is a graph which all vertices are connected to each other. E = V (V - 1) => E = V^2 - V this is the
+worst case scenario.
+
+NOTE: if we are working with a dense graph, using matrix approach is better otherwise list is better.
+
+# Traversal algorithms:
+Depth-search & Breadth search are also applicable to Graphs. But the point is that we always start from root node in
+trees but, we have root in graphs so, we can start traversing with any node and, we can only see the nodes that are
+reachable to that node.
+
+# Depth-First:
+We start from a node and recursively visit all of its neighbors
+
+# Breadth-First:
+Instead of going deep to the graph, we visit a node and all its neighbors before going farther from that node. we
+implement this using a queue. We add a node to a queue. then we add all its neighbors to it and here when we visit each
+node we add its non-existent neighbor to queue.
+
+# Topological Sort:
+For example we want to see what is a certain node dependant to. We use this algorithm. this just works on graphs without
+cycles. We use stack.
+First we breadth first traverse the graph, when we found the right node, we get back and see if all its children are visited
+we add them to stack, or we visit them.
+
+# Weighted Graph:
+We might have a weight(number) on edges which may indicate cost, distance and... A common application is for finding
+the shortest path between two nodes.
+
+# Dijkstra algorithm:
+With this algorithm we want to generate a table of information and find the shortest distance from each node to the other.
+First we pick one node and set the distance to itself zero and all others to max. at each step we look at unvisited
+neighbors of current node and then calculate the distance. And whenever we find a shorter path we update the table. Then
+We move on to next node and recalculate the distance if it was lesser than the current value in table we replace it.
+This is a greedy algorithm, it tries to find the optimal solution at each step.
+
+#

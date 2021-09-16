@@ -1,0 +1,10 @@
+# poor
+use 5 conditions
+
+# better
+use contains()
+
+# best
+use indexOf() with Set for large strings
+
+NOTE: we need to lowercase too.

@@ -1,0 +1,5 @@
+# Check if a String is a rotation of input String:
+First both Strings should have same length.
+We have two approaches:
+- We can concat input with itself and the check if it contains target string.
+- We can have two pointers and iterate and check if they are in correct order.

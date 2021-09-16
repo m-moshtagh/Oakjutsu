@@ -8,7 +8,6 @@
 *.ear
 *.nar
 hs_err_pid*
-
 ##############################
 ## Maven
 ##############################
@@ -82,3 +81,11 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
+
+
+# https://www.dedunu.info/2014/11/gitignore-file-for-java.html
+
+#configs
+src/main/resources/dbconfig.properties
+spring-biju/src/main/java/TODO.java
+hibernate-biju/src/main/java/TODO.java

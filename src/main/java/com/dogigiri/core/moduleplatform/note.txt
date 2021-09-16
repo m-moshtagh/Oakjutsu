@@ -1,0 +1,49 @@
+# Java Platform Module System:
+This change effects The whole java platform: language, compiler, VM & tooling
+reasons:
+- Modularize the JDK
+- Modularize applications
+NOTE: using the module system is optional!
+This feature makes our apps more maintainable.
+
+# Changes:
+before modularity we had one rt.jar (runtime jar) which had all the utility in JDK, keeping this file this way was making
+java hard to evolve.
+Now we have 90 modules shipped with JDK. We have dependency from a module to another module.
+most important module is java.base module which contains all foundation of java platform.
+
+# Advantages:
+- Increased security: If there's a breach in one of java modules, the others won't get any harm.
+- Reduced footprint : We can determine set of modules that our application needs to run.
+- Easy Deprecation
+- Future-proof
+
+# Module:
+A module has a name, it groups related code and is self-contained
+NOTE: Jar files lookalike modules in some points for example:
+- They have file name
+- They group related code
+X No Explicit dependencies
+X Weak boundaries
+
+We need a module descriptor which is defined in a module-info.java file it starts with module keyword followed by
+module name. in body of it we can export one or more packages we want to use.
+By default, all packages that are not exported are strongly encapsulate. only packages that are explicitly exported
+are usable by other modules.
+We also use requires keyword to mention which modules we want to use.
+NOTE: requires needs module name but, exports needs package name.
+> java --list-modules                ==>  lists all modules available in JDK
+> java --describe-module java.module ==>  lists descriptor of the specific module
+
+# Migration issues:
+When try to make apps in classpath way using java 9 it creates an unnamed module and works like past with little
+difference.
+In classpath apps if we try to compile code that is using internal API we get warning. but, in case of Java 9 we get
+error that this is not exported. We can solve this by adding some flags to compiling command, but it has its own cons.
+Jdeps helps us find these problems without compile or running our application.
+> jdeps -jdkinternals Class.class
+this command shows a good description and also a suggestion replacement to the API
+
+If we want to use non-default modules we need to add flag to our compile & run command.
+NOTE: all modules that are not associated with java.se module are called non-default.
+jdeps can also find this.

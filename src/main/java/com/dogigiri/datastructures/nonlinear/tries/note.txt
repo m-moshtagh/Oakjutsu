@@ -1,0 +1,39 @@
+# Tries In Java:
+Its tree but ain't binary tree. it comes from retrieval. it is also called digital, prefix or radix trees. We use them
+in order to implement auto-completion.
+We can't use arrays for autocompletion, because we have to store large number of elements so, it'll be a memory waste as
+lots of words have same prefix like pick, pickle, picky and picture. Tries will allow us to store millions words in
+minimum space and provide superfast lookups. unlike arrays, we don't duplicate characters here. if we consider english
+each node might have 26 different children.
+Our tree always have one root and, we give no value to it.
+
+# Time complexity:
+- Lookup: O(L)
+- Insert: O(L)
+- Delete: O(L)
+
+# Implementation:
+To implement this we need a Trie class which contains a Node Class:
+Node {
+    value:char
+    children: Node[] | Hashtable
+    isEndOfWord: boolean
+    toString()
+}
+Each Trie contains a root node which  is whitespace. we iterate our string and if the node contains that character we
+can skip and if not we can create. at last, we mark that node end of word.
+* NOTE: When we use array we calculate index using "character - 'a'" to locate the index.
+* NOTE: It's always better to abstract some jobs for example all the issues with children that  may differ depending
+on implementation, we can abstract it.
+
+To implement contains method we also iterate over nodes and at last we return isEndOfTheWord property of last node.
+
+# Traversing ties:
+- Pre-Order : We visit each node first, before we visit their children.
+- Post-Order: We start from a leaf node and then come back up.
+
+# Removing a word:
+For removing a word we use Post-Order traversal.
+
+# Auto Completion:
+

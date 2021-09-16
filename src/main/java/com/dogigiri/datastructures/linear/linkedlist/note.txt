@@ -1,0 +1,29 @@
+# Linked List:
+Linked List is also a data structure that holds sequence of data like arrays but consists of nodes which have value and
+link, and each link reference the next node. can shrink and extend automatically.
+We call the first node HEAD and the last node, TAIL.
+
+# Time Complexity of various operations:
+- Lookup by value: O(n)
+- Lookup by index: O(n) -> linked list refer to next node by reference.
+- Insert at end: O(1)
+- Insert at beginning: O(1)
+- Insert in middle: O(n)
+- Delete from beginning: O(1)
+- Delete from end: O(n)
+- Delete from middle: O(n)
+
+# Linked List in java: java.util.LinkedList<E>
+This class has all the required method, and also we can convert it to Array.
+
+# Arrays vs LinkedList:
+In terms of SPACE:
+- static arrays have a fixed size
+- dynamic arrays grow by 50-100%
+- Linked lists take a bit more memory, but they don't waste memory.
+- use arrays if you know the number of items to store
+
+# Types of LinkedList:
+- Singly: every node has a reference to the next node.
+- Doubly: each node also has a reference to previous node.
+*: each of these types can be circular like a playlist.

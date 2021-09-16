@@ -1,0 +1,8 @@
+# Exponential Search:
+The idea is to start with small range and see if the target is in that small range or not.
+if not, we need to double the range at each step. once we find the range that item might exist in we'll do a binary
+search in it.
+We declare a variable called bound and set it to '1'. This is the upper bound of our range which is the last item in
+range, and we compare it to our target item. if we didn't find it we double the range and set the bound 2 * '1'.
+at last if we find the correct range we do a binary search on range of [bound/2, bound].
+Time complexity is: O(log i)

@@ -1,0 +1,8 @@
+# Compare interface allows us to implement logic for comparing two Types for example two users. we need to implement
+compareTo() method.
+The logic is like this:
+subject > target -> +1
+subject < target -> -1
+subject == target -> 0
+we just need to return subtraction value of the type that should be compared in the compareTor() method.
+

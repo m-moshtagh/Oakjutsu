@@ -1,0 +1,96 @@
+# Threads can become really complex in some cases so, Java 5 introduced a High layer abstraction named executive
+framework to handle concurrency problems.
+
+# There are a bunch of problems using thread directly:
+- Cost: The cost of performance with creating and destroying threads are so much.
+- Availability: We may want to create too many threads and if we create lots of threads we may end up with an out
+of memory error.
+
+# The solution is to use Thread pool, Thread pool is a pool of threads called worker thread that can be reused to
+execute several tasks. So these threads are not destroyed or recreated, they  are always available. We can assign
+10 threads to execute our tasks and if all threads are busy the task will wait in a queue.
+
+# In java concept of Thread pool is represented using ExecutorService interface and, it's implementations.
+- ThreadPoolExecutor: a typical ThreadPool implementation which we use most of the time.
+- ScheduledThreadPoolExecutor: We can schedule tasks to run after a delay or periodic.
+- ForkJoinPool: This is a special pool that use a Conquer and Divide approach that splits a task into smaller tasks
+recursively and combines results at last.
+
+# We have a Class Executors that helps us create  ThreadPools using factory methods. We can also create them directly
+but, it can be difficult. We can create singleThread, fixedThread and scheduledThread pools. Then we submit our task
+to thread using submit() method.
+We don't explicitly create Threads, we just submit our task to Thread pool and worker thread will take it on.
+We also need to call shutdown() method or pool will wait for tasks to be executed. this method waits for all tasks to
+be done then shuts the pool down. *: it's better to be executed in a finally{} block.
+benefit here is that we don't need to manipulate threads directly, but we still have to consider raceCondition and
+visibility issue.
+
+# For tasks that return a value we can pass Callable<> interface to submit() method. this interface has a single method
+call(). The return type if we store in variable is Future which represents the future result of an operation that will
+complete in the future. It has a bunch of useful methods like: get() which we can pass timeout, cancel() and isDone().
+When we call get() method we actually need to wait for that operation  to be finished.
+
+# Asynchronous programming:
+In the Callable example when we run the program actually the program freezes and the main thread is wasted because the
+get() method is a blocking method that blocks the main Thread. in a desktop app we need to do several operations in
+the same time, like a waiter of a restaurant. This way of programming is called Asynchronous programming or
+Non-blocking programming.
+
+# We have class CompletableFuture which implements Future interface. It means this class can explicitly complete
+something in the Future. It also implements CompletionStage. This interface refers to an Asynchronous step operation that
+it takes to complete a task. It also gives us Functions to combine steps in a declarative way.
+We can create it with:
+- CompletableFuture.runAsync(): This accepts a Runnable and an Executor. if we don't pass Executor, it will use common
+pool. (ForkJoinPool is an implementation of ExecutorService interface that has a static method commonPool() which is the
+pool used by the CompletableFuture class.) But if common pool doesn't meet our needs, we can create our own pool. This
+method returns void. we actually didn't have to do all, submit(), ... stuff.
+*: Common pool is based on the available Threads. we have 4 cores and each core has 2 threads we can get it by
+Runtime.getRuntime().availableProcessors().
+- CompletableFuture.supplyAsync(): This method accepts a Supplier and returns a value instead of void.
+
+# Implementing Asynchronous API:
+In normal way all the programs we write are Synchronous. Some operations like sending a file on network or sending email
+take quite a while so, we need to wait. A simple way to implement an Asynchronous API is to return a CompletableFuture
+wrap that method by the CompletableFuture runAsync() or supplyAsync() methods.
+*: Main thread finishes faster than the sending mail. so the program terminates faster than the async method finishes.
+We can wait more with Thread.sleep() as we used in the example.
+
+# Running code on completion:
+Sometimes we want to do another task after the async method is done like, submitting the result in Database.
+In order to do that CompletableFuture has a thenRun() method which is provided by CompletionStage interface. It accepts
+Runnable interface. It also has thenRunAsync() method. We also have another pair of methods thenAccept() which is useful
+to get the result of this CompletableFuture. It accepts Consumer interface.
+*: Again we need to be careful that program doesn't terminate before our Async method finishes.
+
+# Handling Exceptions:
+If we throw an exception in our supplyAsync() method for example, we only can get the exception using the get() method.
+we can also call exceptionally() and provide a lambda function to it so, it can return a default value if any exception
+occurred.
+*: when we call exceptionally() method it returns a new CompletedFuture instead of the main CompletedFuture.
+
+# Transform a CompletableFuture:
+For chaining our future results in a declarative way, we use CompletableFuture.thenApply() method which also has an async
+method too. in case we get a result from a weather cast API in Celsius, we can change it to Fahrenheit using this method.
+
+# Composing a CompletableFuture:
+Sometimes we want to start a task on completion of another task. For this purpose we use thenCompose() method which we
+can chain multiple of them in a declarative way.
+
+# Combining CompletableFutures:
+This cool feature allows us to start to CompletableFeatures simultaneously and then combine the results. This way it's not
+going to block the current thread. everything will happen Asynchronously.
+
+# Waiting for all tasks to complete:
+We have CompletableFuture.allOf() method which accepts multiple CompletableFutures and returns a completableFuture that
+completes after all those we passed to method have completed. We can get() each of them without blocking the current thread
+because all these tasks have been completed.
+
+# Waiting for the fastest task to complete:
+sometime we may have two tasks that one of them takes much longer but, We want to see the result of the fastest one
+as it finishes. here we use anyOf() method which we pass multiple CompletableFutures. this method also returns a
+CompletableFuture which is when one of the tasks has finished.
+
+# Handling Time-outs:
+Sometimes we want to throw exception or provide a default value when an operation takes too long for execution. We have
+orTimeOut() method which accepts a value and, also a TimeUnit which is an Enumeration. we can also call completeOnTimOut
+provide a third value for the default value in case exception was thrown.

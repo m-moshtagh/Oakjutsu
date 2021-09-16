@@ -1,0 +1,50 @@
+# Logging in Java
+Logging is the act of writing information about an event in application to a logFile.
+Developers decide what should be written to a log file.
+Logging is required for troubleshooting, analysis and also auditing.
+
+# When to use logging:
+- Exceptions & Errors
+- Events & States
+- Debugging information
+- Http requests & responses
+- Thread usage
+- Front-end errors
+
+# Java Logging process:
+We can have a Logger instance in our application. This will filter some data and store it in LogRecord instance.
+LogRecord get pass to Handler instance which can filter and format data. At last the result will be stored in an
+external Log file. There's a LogManager That is handling this event.
+
+# Log Levels:
+Log levels indicate the severity of the situation. There are seven log levels and each will be translated to a number
+in Java logging API. The higher number, the more severe situation we have.
+- Sever
+- Warning
+- Info
+- Config
+- Fine
+- Finer
+- Finest
+* NOTE: When we choose a sever level, the finer levels won't be logged.
+* NOTE: The default level of Handler is Info so, if we write a log event in fine level. it won't be logged. In order
+to edit the Handler log level, we can create add a Handler instance to our logger instance.
+
+# Different kinds of Handlers:
+- Console handler
+- File Handler
+- Stream Handler
+- Socket Handler
+- Memory Handler
+
+# Logging Best Practices:
+- Be precise
+- No Sensitive Data
+- Right Log Level
+- Machine & Human Readable
+- Don't log too much
+- Don't log too little
+
+# Log methods:
+We have log(), logp() which stands for log precise and logrb() which stands for log resource bundle. This also gets
+Resource Bundle which is a localization applied to log messages.

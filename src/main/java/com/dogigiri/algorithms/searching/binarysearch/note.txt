@@ -1,0 +1,7 @@
+# Binary Search:
+This is a faster search than linear search but, the array needs to be sorted. We define a middle variable which is
+calculated from:
+> middle = left + right / 2
+we compare till we find our item and replace left and right variables to find our item.
+Time complexity is: O(log n)
+Space complexity by recursion is O(log n) & by iteration is O(1)

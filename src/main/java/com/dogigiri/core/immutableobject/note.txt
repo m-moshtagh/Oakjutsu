@@ -1,0 +1,3 @@
+# Immutable Class:
+To create immutable classes we just declare every property private and final and no methods to modify these fields.
+This makes classes less useful but, more threadsafe.

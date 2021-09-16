@@ -1,0 +1,7 @@
+# Jump Search:
+This is an improvement to linear search, but it's not faster than binary search.
+We divide the list into few blocks and instead of checking every item we jump to the block where the target may exist
+then we'll do a linear search in that block.
+
+The ideal block size is square root of n.
+Time complexity is: O(sqrt(n))

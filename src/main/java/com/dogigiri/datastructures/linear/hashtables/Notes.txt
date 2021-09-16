@@ -1,0 +1,57 @@
+# Hashtable:
+This is one of the most useful data structures. The most important feature is that they give us superset lookups.
+We use them for Spell checkers, Dictionaries, Compilers and Code editors. for example compilers use hashtable to look up
+for the address of an Object or a variable.
+
+# In different languages this is called different:
+- Java -> Hashmaps
+- Python & C# -> Dictionary
+- Javascript -> Object
+
+# This structure stores objects as key value. The hashtable takes the key and passes it to hash() function and the result
+will tell where the value should be stored in memory. now for lookup it does the same process with key and hash() to find
+the object. Everytime we give it the same input, it will return the same value. it uses an array to store objects and
+the three functions: 1) insert 2) lookup 3) delete are executed in O(1).
+
+# Hashtable in Java:
+We have Map interface in java which has various implementations but, mostly we use HashMap Class. This also has some useful
+methods:
+- put(): add element
+- get(): get element
+- containsKey(): checks if a key is present
+- containsValue(): takes all keys and checks if a value is present or not.
+- entrySet(): returns an Entry object which allows us to iterate or do something with stored objects.
+- keySet(): returns Keys that we can iterate.
+
+# Sets:
+Set is a kind of data structure which only stores key objects. This is really useful when we need ot store a list which
+we are not allowed to store duplicate keys.
+We have Set interface and usually use HashSet class.
+
+# Hash methods:
+Let's see why these two structures are fast.
+Hash functions are some kind of functions which take an input and convert it to an int value via a specific algorithm.
+Map uses hash function of key to find an index to store the object in memory. in Java, every object has built in hashcode()
+and HashMap use this builtin hashcode() and some extra work to find the index for storing values.
+
+We have collision case when some keys might produce same hashcode so, we can't store two variables in one address. this
+is called collision. Here we might do chaining. we reference the address to a LinkedList which points to both values.
+
+# We also have another method to prevent collision, which is open addressing. in this way we store the value in our
+structure and, when the collision happens we do something called Probing(searching) and look for empty Slots. We have
+three probing algorithms:
+
+- Linear probing: we go to slot, if it's full, we go to next slot one by one and if we don't find any it means the
+table is full and, it's the drawback of the chaining strategy.
+Linear Probing: hash(key) + i
+This approach has some problems. if we call the slots that are clustered together. we have to traverse all cluster to insert
+at last.
+
+- Quadratic Probing: Here we change the i linear incrementation to Quadratic(squared) which makes us traverse table
+faster but here we'll have a problem that if we traverse the whole table, we might traverse the same slots next time.
+(hash(key) + i^2) % TABLE_SIZE
+
+- Double Hashing: This one comes to rescue. Instead of i^2, we want to use independent hash function to calculate number
+of steps.
+(hash(key) + i * hash(key)) % TABLE_SIZE
+This also have Cluster problem but, it's no issue in large tables.

@@ -1,0 +1,13 @@
+# Stacks:
+We use this structure in order to:
+- implement undo features
+- evaluate an expression
+- build compilers
+- build navigation
+
+Stacks are LIFO structures. we can only access the top element in stack, so in order to get the last element we have to
+take all elements out.
+
+Runtime complexity is O(1) for each operation.
+
+*: whenever we are going for a reverse task, stacks are our best option.

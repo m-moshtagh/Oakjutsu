@@ -1,6 +1,6 @@
 Java tokens are some concepts in java that are specific.
 We can classify tokens to:
-* Key words ==> any reserved word
+* Keywords ==> any reserved word
 * Identifiers ==> all variable names
 * Constants ==> final variables
 * Special symbols ==> () [] {} ; * =

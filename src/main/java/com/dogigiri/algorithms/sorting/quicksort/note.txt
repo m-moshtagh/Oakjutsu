@@ -1,0 +1,33 @@
+# Quick Sort:
+This is the most used algorithm and also, built-in in most languages.
+We start by selecting an element which we call pivot, then we rearrange array so that all items less than pivot are
+on the left and items greater than pivot are on the right. this is called partitioning. So we divide array into two
+partitions that are separated by pivot. We normally select last item as pivot but, we can select first or a random
+item from array.
+NOTE: when we select pivot and partition our array, the pivot item will go to its right order position.
+We repeat this operation on other partitions.
+NOTE: The point which is remarkable is that for each partitioning we ignore the left or right of one partition based
+on pivot. this is why we have logarithmic time complexity.
+
+# Partitioning:
+First we select our pivot. We use two pointers here:
+first one will iterate over this array(loop variable)
+second one will be used to mark the boundary of the left and right partitions.(end of the left partition)
+We swap the smaller ones and ignore the larger ones.
+When we encounter items less than pivot we increase boundary pointer then we just swap it with the found item. After
+that we just need to move the pivot after the last item of left partition. (at last, boundary should point to pivot).
+
+Time complexity of partitioning is O(n)
+Time complexity of pivot selecting at worst is O(n) and best is O(log n).
+NOTE: we can pick randomly, use the middle index and also average of first, middle & last item to fix this issue.
+NOTE: these solutions doesn't improve worst case scenario but, they reduce their likelihood.
+
+Total Time complexity of quick sort is:
+- Best case scenario: O(n log n)
+- Worst case scenario: O(n^2)
+
+Unlike merge sort we don't need additional arrays but, we need space for recursive calls. So it depends on how many
+times we want to partition array.
+The Space complexity is:
+- Best case scenario: O(log n)
+- Worst case scenario: O(n)

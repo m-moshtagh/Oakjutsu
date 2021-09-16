@@ -1,0 +1,4 @@
+# Sentence Capitalization:
+In order to capitalize first letter of each word in a sentence, first we need to split it and also trim() or strip()
+the whitespaces.
+Second, we can iterate over and toUpperCase() the first letter of each word and third, We join them with a space.

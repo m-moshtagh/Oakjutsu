@@ -1,0 +1,5 @@
+# Palindrome:
+We can check if a String is palindrome in two ways:
+- Use String Builder to reverse and compare it to original one.
+- Define two pointers, one indicating first index and the other last index. Then we compare them as we adjust their
+positions.

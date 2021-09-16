@@ -1,0 +1,26 @@
+# Jshell:
+It's a REPL for java language. (Read Eval Print Loop) means it is an interactive programming environment that we can
+prototype Java code.
+Jshell helps to quickly experience Java code. We can quickly test ideas without need of main method ceremony. We can
+also explore APIs. We get code completion and also built-in documentation. It's also a great teaching tool.
+
+# Usage:
+We can use Jshell from commandline by typing command jshell. we can quit it using /exit and also get help by /help.
+we can type any valid java expression, statement.
+NOTE: we can use regex matching directly on a string by following matches() method.
+We can see what's imported using /imports. we can also add our own imports.
+
+# Jshell Environment:
+We can also interact with outside environment with jshell.
+> /save name.jsh ==> saves session to a file. then we can open it by /open command
+
+We can also add jars to classpath and use --classpath option + jar name and use them in snippet.
+
+# Jshell API:
+- we can integrate a jshell in our own application
+- we can have code completion functionality
+- source code analysis
+- IDE integration
+var jshell = Jshell.create();
+List<SnippetEvent> events = jshell.eval("int i = 0;");
+Stream<VarSnippet> vars = jshell.variables();

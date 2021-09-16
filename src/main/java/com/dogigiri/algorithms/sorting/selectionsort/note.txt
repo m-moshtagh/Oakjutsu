@@ -1,0 +1,8 @@
+# Selection Sort:
+In this algorithm we divide array in two section:
+- Sorted section
+- Unsorted Section
+We try to find the smallest | largest element on unsorted section and move it to sorted section. We continue this till
+the whole array is sorted.
+
+Time complexity is O(n^2) which has poor performance.

@@ -1,0 +1,48 @@
+# AVL tree:
+We discussed that in binary tree, most operations are in O(log n). but, this done if the tree is balanced; it means
+if height(left) - height(right) <= 1
+Perfect tree: it's a tree where nodes are completed in last level.
+right skewed tree: this tree is like this:
+*
+    *
+        *
+            *
+
+We also have left skewed tree.
+NOTE: trees become unbalanced when we insert sorted values in them. in ascending order we end up with right skewed
+and in descending order we end up with left skewed tree.
+
+There are different algorithms for balancing trees. AVL trees are the first balancing trees. it's a special binary tree
+with special balancing property. everytime we insert or remove a value the tree balances itself.
+Other balancing trees are: Red-Black trees, B-trees, Splay-trees, 2-3 Trees.
+
+# Rotation:
+AVL trees do the balancing by making sure the difference of height of the left and right subtrees are never more than
+one. So if it was, they rebalanced themselves using rotations.
+Different kinds of rotations:
+1) RR
+                A         (R)           B
+             B            ->      C            A
+          C
+
+2) LL
+                A                   (L)         B
+                      B             ->       A      C
+                            C
+
+
+3) LR
+                A           (L)              A         (R)          C
+            B               ->          C              ->       B       A
+                C                   B
+
+4) RL
+                A           (R)         A             (L)           C
+                    B       ->              C          ->       A       B
+                C                               B
+
+We choose the method depending on which side of the tree is heavier.
+
+# Balance Factor:
+This factor determines if out tree is unbalanced to begin the rotation or not.
+BF = height(L) - height(R) = [01-1]

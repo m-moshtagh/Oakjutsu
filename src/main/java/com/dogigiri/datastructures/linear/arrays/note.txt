@@ -1,0 +1,28 @@
+# Arrays are sequence of Objects that are stored in a specific section of memory. Arrays are indexed so that we can
+access each element easily without knowing the exact place of the memory reserved for our desired object.
+The time complexity differs on the operation we are going to do to the array for example:
+- for accessing an element: O(1) because the array is indexed.
+- for inserting an element: O(n) because arrays have fixed size so, we need to create additional array and copy all
+elements in the new array.
+- for deleting an element: O(n) because in case we are going to delete the first element, we have to shift all elements
+one place to left.
+*: Arrays are built in data structures in most programming languages.
+See the ArrayDemo class!
+
+*: there are also some useful methods like length() which can be accessed by object identifier.
+
+# Example: create Array class which can insert, delete, max, min, intersect, reverse and indexOf
+
+# Java has two Dynamic Array implementation.
+- ArrayList = grows size for 50%
+- Vector = grows size for 100% also, has synchronized methods
+
+# in order to implement this:
+- We use static arrays and initialize it with an input from user. We also need to store the count number of elements.
+- For insert we need to check if we have reached array capacity so, we extend it and copy values in a new one.
+- For remove we need to shift the elements after the target one to the left.
+- index of is a simple traverse.
+- for bisect we only need to add it to another if the indexOf is greater in other array.
+- for max & min, if we want o(1) we need to store it in a local variable but, we'll get more memory.
+
+

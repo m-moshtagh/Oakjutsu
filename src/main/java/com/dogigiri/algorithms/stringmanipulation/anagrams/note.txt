@@ -1,0 +1,9 @@
+# Anagrams:
+in order to check if two strings are anagrams, we have two approaches:
+- sorting them and compare their equality.
+- histogram
+
+In second approach we create an array with 26(english alphabet) indices. Then we iterate first input and increment
+the proper alphabet's value. to find index of alphabet we just decrement char from 'a'(97) to find its proper place.
+Then we iterate over second input and, we can compare each char with the array but proper way is to decrement value
+of array and if the index was 0 we can return false otherwise, it's true.

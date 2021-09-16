@@ -1,0 +1,112 @@
+# regex:
+in order to match patterns in Strings we can use regular expressions. unix grep command can also use regex to find specific
+content.
+- .: period is useful to mention any character. for example (f.) resembles that we are looking any String which has a word
+that start with f and also ends with any character.
+
+- *: star means that we can have any number of the character which star came right after that. for example f.*x means any word
+in a string which starts with f and hast any number of any character and ends with x. (it also includes 0)
+
+- +: Match any number of previous
+
+- \: for any character that prevented regex to compile, we should use this character just before that. for example \s which
+represents any whitespace.
+
+- $: This means end of the line.
+
+- ^: beginning of the line.
+
+- \a: anything
+
+- \S: any non whitespace character
+
+- \s: any whitespace character
+
+- \d: any decimal letter
+
+- \D: any non-decimal letter
+
+- \w: any alphanumerical letter
+
+- \W: any non-alphanumerical letter
+
+- \?: Optional, means 1 or 0
+
+- \a{range}: any occurrence any number of times
+
+- (?i): if we put this behind the word, the pattern will be treated as case-insensitive.
+
+- (?x): This is standalone flag for interpreting comments.
+
+- (?s): This is standalone flag for DOTALL.
+
+- (?m): multiline
+
+- (?:): non-capturing groups. This is when we want to match something but, we don't want to include them.
+
+- []          :    OR
+- [^foo]      :    NOR
+- [a-z]       :    any lowercase letter
+- [A-Z]       :    any uppercase letter
+- [a-zA-Z]    :    any letters
+- [0-9]       :    any number
+- Union       :    [2-5[7-9]]
+- Intersection:    [2-5&&[3-7]]
+- Subtraction :    [^0-9&&[^2468]]
+
+# Capturing groups to treat a group of characters as a unit:
+ex => (\\d\\d) => \\d refers to one digit of number so if we try to match 123 it will find 3 matches. but now that we have
+two of them this will be treated as one unit, so if we try to match 1234 it will find 2 units.
+
+# Repeating regex multiple times:
+ex => (\\d\\d)(\\d\\d) => here we are creating two capturing groups, if we try to match 1212 it will find one result.
+but for example we try to match thousands of digits, we can't repeat these capturing groups forever. we can solve this
+problem by using backreference.
+(\\d\\d)\\1 equivalent to (\\d\\d)(\\d\\d)
+We create our capturing group, follow it we can specify the number of its repeating sequence. if we put 0 exception
+will be thrown.
+NOTE: This only works on repeating sequence. it means if we try to match 1212 it will not pass.
+
+# Boundary matcher & Pattern class methods:
+- Beginning of the line matcher: '^' at the beginning of the sentence shows that the string must start with this word.
+- End of the line matcher: '$' indicates that the word is at the end of the sentence.
+- Word boundary: if we put \\b before and after a word in regex, this will match if the word doesn't have any trilling
+or leading characters. it doesn't matter if it's at the beginning or end of the line.
+We can negate this with \\B.
+
+# Using Flag with Java Regex API:
+We have to pass integer value which is a bitmask that indicates which flag should be used. This flag shows how the
+behaviour of our flag should change. for example case-sensitive or ...These flags are defined as constants in Pattern
+class.
+
+# Using comments in Regex:
+We can use comments in regex by using # before the sentence and also pass the Pattern. COMMENTS flag.
+
+# Pattern literal & Pattern multiline:
+The “.” Meta character matches all the characters including line terminators with DOTALL flag.
+Sometimes we want to only match literals it means we don't want to use escaping characters using \ in our pattern so
+here we use Pattern. LITERAL flag. In order to behave newLine as whitespace we can use Pattern.MULTILINE
+
+# Using Matcher index:
+After we use Matcher.find() method we can call matcher.start() & matcher.end() to get the indices where we found the
+pattern. If we have two matches, we need to call the find() method once again to get the indices of the next occurrence.
+
+# Matcher.matches():
+This method checks the pattern against the whole input.
+
+# Matcher.lookingAt():
+This method checks the pattern against the beginning of the input.
+
+# Using Regex with replacement methods:
+matcher.replaceFirst() method finds the first occurrence of the pattern and replace it with something and returns a new
+String literal. We also have replaceAll() method.
+
+# Improving performance:
+- We should make sure to compiler regex only once and reuse it.
+- if we have common things between patterns wa want to match, we should make sure to capture them in a group to avoid
+compiling all of them.
+
+# Grouping matches:
+https://stackoverflow.com/questions/3512471/what-is-a-non-capturing-group-in-regular-expressions
+https://www.logicbig.com/tutorials/core-java-tutorial/java-regular-expressions/regex-capturing-groups.html
+In java we can get the groups by matcher.group() method.

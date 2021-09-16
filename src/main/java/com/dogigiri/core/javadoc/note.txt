@@ -1,0 +1,22 @@
+# Java Doc:
+When you want to create a clean documentation for your Java classes and components we can use javadoc tool which help us
+generate all the information we need in HTML formant.
+
+# To achieve these documents we can use some specific tags. for example to annotate a class we can use:
+- @author
+- @version
+- @since
+- @see
+
+For methods, we can specify:
+- @param
+- @return
+- @throws
+- @exception
+- @deprecated
+- @code
+
+There are other annotations like:
+- @link
+- @value
+- @serial

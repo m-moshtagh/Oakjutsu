@@ -1,0 +1,20 @@
+# counting Sort:
+There are some algorithms that sort our data without comparison.
+- Counting Sort
+- Bucket Sort
+- Radix Sort
+These algorithms use basic math.
+This algorithm we create a temp array with range[0, K] which K is the largest element of our array. now we iterate
+our array and increment count of each value we interfere. Then at last, we iterate over temp array and put each item
+in the main array with their number from lowest to largest.
+
+Space Complexity is O(K) because we need to allocate array based on largest item in array.
+Time Complexity:
+- Populate counts O(n)
+- Iterate counts O(K)
+- Total O(n)
+NOTE: This algorithm is faster than others so far, but this has memory waste.
+When to use:
+- Allocating extra space doesn't matter
+- Values are positive Integers
+- Most of the values in the range are present.
