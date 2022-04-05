@@ -57,3 +57,27 @@ We can access most relevant headers using:
 * getHeaderFieldInt(String name, int default)
 
 ### Caches
+In order to save load time, Browsers can cache the resources. Cache content can be controlled via `expires` header and 
+`cache-control` header. cache control header options are massive.
+Cache-control has several policies:
+* max-age=[seconds]: Number of seconds from now before the cached entry
+should expire
+* s-maxage=[seconds]: Number of seconds from now before the cached entry
+should expire from a shared cache. Private caches can store the entry for longer.
+* public: OK to cache an authenticated response. Otherwise, authenticated responses are not cached.
+* private: Only single user caches should store the response; shared caches should
+not.
+* no-cache: Not quite what it sounds like. The entry may still be cached, but the
+client should verify the state of the resource with an ETag or Last-modified
+header on each access.
+* no-store: Do not cache the entry no matter what.
+Cache-control overrides Expires if both are present. A server can send multiple
+Cache-control headers in a single header as long as they don’t conflict.
+* The Last-modified header is the date when the resource was last changed. A client
+can use a HEAD request to check this and only come back for a full GET if its local
+cached copy is older than the Last-modified date.
+* The ETag header (HTTP 1.1) is a unique identifier for the resource that changes
+when the resource does. A client can use a HEAD request to check this and only come
+back for a full GET if its local cached copy has a different ETag.
+
+### Web caches for Java
