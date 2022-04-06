@@ -28,6 +28,12 @@ we can use `@Lob` which  is clob in database.
 ![Introduction](../pics/intro9.png)
 ![Introduction](../pics/intro10.png)
 
+> On OneToMany if we declare unidirectional mapping, We have only one side to navigate. We can persist from only one side.
+> For complex queries we need to use join fetch in order to retrieve something.
+> For bidirectional OneToMany mapping, one side should declare ManyToOne relationship and, also it should be the master.
+> so the OneToMany side should mapBy the ManyToOne side. For persisting from OneToMany Side we can create  a helper method
+> which submits itself on the master. Example is found in `onetomannybidirectional` package.
+
 > PRO TIP: On Bidirectional relationships we can use Helper methods to set the objects on both sides.
 
 ### JPA Enumerations
