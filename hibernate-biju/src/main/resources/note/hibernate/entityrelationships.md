@@ -33,6 +33,7 @@ we can use `@Lob` which  is clob in database.
 > For bidirectional OneToMany mapping, one side should declare ManyToOne relationship and, also it should be the master.
 > so the OneToMany side should mapBy the ManyToOne side. For persisting from OneToMany Side we can create  a helper method
 > which submits itself on the master. Example is found in `onetomannybidirectional` package.
+> ManyToMany Can also be Unidirectional like Vet & Speciality in pet-clinic project.
 
 > PRO TIP: On Bidirectional relationships we can use Helper methods to set the objects on both sides.
 
