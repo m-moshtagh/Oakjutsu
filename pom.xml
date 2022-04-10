@@ -109,6 +109,12 @@
             <artifactId>gson</artifactId>
             <version>2.9.0</version>
         </dependency>
+<!--        External Libraries  -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
     </dependencies>
 
     <build>
