@@ -37,7 +37,10 @@ we can use `@Lob` which  is clob in database.
 
 > PRO TIP: On Bidirectional relationships we can use Helper methods to set the objects on both sides.
 
+[This is Best practices for CascadeTypes on relational Object Mappings:](https://vladmihalcea.com/a-beginners-guide-to-jpa-and-hibernate-cascade-types/)
 ### JPA Enumerations
 We can also declare Enum dependency to our pojo and for the type in database we annotate it with
 `@Enumerated` and we pass value `EnumType.ORDINAL` or `EnumType.STRING`
 Ordinal will persist numeric values in database. Using String we can store String values to database.
+
+
