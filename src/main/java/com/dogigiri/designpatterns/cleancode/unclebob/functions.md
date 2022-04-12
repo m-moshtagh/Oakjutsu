@@ -45,7 +45,50 @@ We can write programs without any assignment statements. instead of declaring va
 The output of function only depends on the arguments not any statement of the system, so function always return same output with same arguments.
 The side effect is temporal coupling which means functions need to be called in order. for example first open connection to DB then close it. This is solved by passing a block to functions.
 
-#### Command Query Separation
+##### Command Query Separation
 
 One Best practice is to separate command functions from query functions because command functions can completely change the state of application but queries not.
 We sometimes write functions which return something for example user after login but absolutely this operation changed the state of system. We also, return null if it fails. But Here best practice is to throw exception if something goes wrong and return nothing(void) when operation was successful.
+
+##### Tell Don't Ask
+
+For doing operations, It's always recommended that We don't ask anything for object state, because object knows its state better than anyone. for example:
+
+```java
+if(user.isLoggedIn)
+    user.executeCommand();
+else
+    annunciater.promptLogin();
+```
+
+> It's better to write the above code like this:
+
+```java
+try{
+    user.executeCommand();
+} catch(User.NotLoggedIn e){
+    annunciator.prompedLogin();
+}
+```
+
+However, still we ask the user if it's loggedIn or not we can solve this by passing the block to it:
+
+```java
+user.executeCommand(command, annunciator);
+```
+
+> The law of Demeter: This law tells us to not make chain of functions.
+
+#### Structured Programming
+
+Structured programming says that all algorithms should be composed out of three basic operations:
+
+* sequence: Consists of two blocks which the first blocks output feeds the second block and, second block uses first block output to operate.
+* selection: There are two blocks separated by a boolean so, depending on the boolean value each block can be executed.
+* iteration: a block runs consecutively until a boolean value changes.
+
+So according to this no mather how complex algorithm is, it has single entrance at the top and single exit at bottom.
+
+##### Error Handling
+
+It's always good to throw uncheckedExceptions. 
