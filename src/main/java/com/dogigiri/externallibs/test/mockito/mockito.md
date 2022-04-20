@@ -65,3 +65,21 @@ There are some methods like any(), anyLong(), etc. That we can use in our verify
 `verify(mockObject, times(2)).delete(any(InputType.class))`
 
 ## Behavior Driven Mockito
+
+![BDDMOCITO](../pics/bddmock1.png)
+![BDDMOCITO](../pics/bddmock2.png)
+![BDDMOCITO](../pics/bddmock3.png)
+
+```java
+// given
+Model model = new Model();
+given(Repositoru.function()).willReturn(Optional.of(Model));
+
+// when
+var foo = service.function();
+
+// then
+// assertion test
+then(repository).should().function();
+then(repository).shouldHaveNoMoreInteractions();
+```
