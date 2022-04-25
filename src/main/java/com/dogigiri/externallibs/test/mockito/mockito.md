@@ -83,3 +83,19 @@ var foo = service.function();
 then(repository).should().function();
 then(repository).shouldHaveNoMoreInteractions();
 ```
+
+## Advanced Mockito
+
+### Throw Exception
+
+in order to assert that the object handles exception correctly we can use mockito `willThrow()` & `doThrow()` functions.
+in regular or BDD way.
+
+### Filter using lambda
+
+In our given statement, we can use `argThat()` function and pass lambda which can filter the input argument of the 
+function we are trying to call.
+
+### Argument Capture
+
+
