@@ -98,4 +98,7 @@ function we are trying to call.
 
 ### Argument Capture
 
+In order to use argument capture we can create a field annotated with `@Captor` or create a local variable.
+`final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class)`
+
 
