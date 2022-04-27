@@ -28,9 +28,19 @@ we can use `@Lob` which  is clob in database.
 ![Introduction](../pics/intro9.png)
 ![Introduction](../pics/intro10.png)
 
+> On OneToMany if we declare unidirectional mapping, We have only one side to navigate. We can persist from only one side.
+> For complex queries we need to use join fetch in order to retrieve something.
+> For bidirectional OneToMany mapping, one side should declare ManyToOne relationship and, also it should be the master.
+> so the OneToMany side should mapBy the ManyToOne side. For persisting from OneToMany Side we can create  a helper method
+> which submits itself on the master. Example is found in `onetomannybidirectional` package.
+> ManyToMany Can also be Unidirectional like Vet & Speciality in pet-clinic project.
+
 > PRO TIP: On Bidirectional relationships we can use Helper methods to set the objects on both sides.
 
+[This is Best practices for CascadeTypes on relational Object Mappings:](https://vladmihalcea.com/a-beginners-guide-to-jpa-and-hibernate-cascade-types/)
 ### JPA Enumerations
 We can also declare Enum dependency to our pojo and for the type in database we annotate it with
 `@Enumerated` and we pass value `EnumType.ORDINAL` or `EnumType.STRING`
 Ordinal will persist numeric values in database. Using String we can store String values to database.
+
+
