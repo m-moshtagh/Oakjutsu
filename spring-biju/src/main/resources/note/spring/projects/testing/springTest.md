@@ -36,6 +36,8 @@ MockMVC mockmvc = MockMVCBuilders.standAloneSetup(controller).build();
 mockmvc.perform(get("/")).andExpect(status.isOk()).andExpect(view().name("index"));
 ```
 
+We can also chain model test with andExpect() function to test the Model attributes.
+
 ### Spring Integration Tests
 
 In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database 
