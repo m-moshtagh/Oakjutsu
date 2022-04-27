@@ -55,3 +55,7 @@ We can also chain model test with andExpect() function to test the Model attribu
 
 In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database 
 operation we can use `@DataJPATest` which brings entity manager.
+
+## Spring Testing Context
+
+
