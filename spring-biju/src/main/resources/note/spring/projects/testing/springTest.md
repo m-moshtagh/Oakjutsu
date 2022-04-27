@@ -17,6 +17,19 @@
 
 > Pure Junit & Mockito notes are available in core module.
 
+### Spring specific tests
+
+![springtest](../../pics/spt1.png)
+![springtest](../../pics/spt2.png)
+![springtest](../../pics/spt3.png)
+![springtest](../../pics/spt4.png)
+![springtest](../../pics/spt5.png)
+![springtest](../../pics/spt6.png)
+![springtest](../../pics/spt7.png)
+![springtest](../../pics/spt8.png)
+![springtest](../../pics/spt9.png)
+![springtest](../../pics/spt10.png)
+
 ## Spring MVC Tests
 
 ### MockMVC
