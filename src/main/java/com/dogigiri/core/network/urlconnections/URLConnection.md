@@ -246,4 +246,81 @@ public class MemoryCache extends ResponseCache {
 }
 ```
 
+### Configuring the connection
+
+This class has seven protected instance fields which define how clients connect to server:
+
+* url
+* doInput
+* doOutput
+* allowUserInteraction
+* useCaches
+* isModifiedSince
+* connected
+
+> we can control these fields using getters and setters before URLConnection is connected to server.
+
+#### URL url
+
+Specifies the URL this URLConnection connects to.
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class URLPrinter {
+    public static void main(String[] args) {
+        try {
+            URL u = new URL("http://www.oreilly.com/");
+            URLConnection uc = u.openConnection();
+            System.out.println(uc.getURL());
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+}
+```
+
+#### connected
+
+If true the connection is open and false if it's closed. If you inherit URLConnection to write a protocol handler, you are responsible for 
+setting connected to true when you are connected and resetting it to false when the connection closes.
+
+#### allowUserInteraction
+
+If we need user interaction we need this to be true. In a standalone application, you first need to install an Authenticator, as
+discussed in “Accessing Password-Protected Sites” on page 161. 
+
+#### doInput
+
+When this field is true, URLConnection is able to read from the server.
+
+#### doOutput
+
+This field is true when we need to write to the server. When this is true on HTTP URLs the method will change 
+to POST.
+
+#### isModifiedSince
+
+When we try to retrieve files from server and, we use cache we can set this value to check if the content has changed 
+since certain time.
+
+#### useCaches
+
+This field determines to use cache or not.
+
+#### timeouts
+
+We have four methods for controlling the time underlying socket uses:
+
+* setConnectTimeout
+* getConnectTimeout
+* setReadTimeout
+* getReadTimeout
+
+The `setConnectTimeout()/getConnectTimeout()` methods control how long the socket waits for the initial connection.
+The `setReadTimeout()/getReadTimeout()` methods control how long the input stream waits for data to arrive.
+
+### Configuring the client request HTTP Header
+
 
