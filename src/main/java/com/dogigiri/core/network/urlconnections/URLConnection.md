@@ -283,13 +283,15 @@ public class URLPrinter {
 
 #### connected
 
-If true the connection is open and false if it's closed. If you inherit URLConnection to write a protocol handler, you are responsible for 
+If true the connection is open and false if it's closed. If you inherit URLConnection to write a protocol handler, you
+are responsible for
 setting connected to true when you are connected and resetting it to false when the connection closes.
 
 #### allowUserInteraction
 
-If we need user interaction we need this to be true. In a standalone application, you first need to install an Authenticator, as
-discussed in “Accessing Password-Protected Sites” on page 161. 
+If we need user interaction we need this to be true. In a standalone application, you first need to install an
+Authenticator, as
+discussed in “Accessing Password-Protected Sites” on page 161.
 
 #### doInput
 
@@ -297,12 +299,12 @@ When this field is true, URLConnection is able to read from the server.
 
 #### doOutput
 
-This field is true when we need to write to the server. When this is true on HTTP URLs the method will change 
+This field is true when we need to write to the server. When this is true on HTTP URLs the method will change
 to POST.
 
 #### isModifiedSince
 
-When we try to retrieve files from server and, we use cache we can set this value to check if the content has changed 
+When we try to retrieve files from server and, we use cache we can set this value to check if the content has changed
 since certain time.
 
 #### useCaches
@@ -322,5 +324,112 @@ The `setConnectTimeout()/getConnectTimeout()` methods control how long the socke
 The `setReadTimeout()/getReadTimeout()` methods control how long the input stream waits for data to arrive.
 
 ### Configuring the client request HTTP Header
+
+We can send header values by using `setRequestProperty()` & `getRequestProperty` on HTTP URLs. this method accepts two
+String values. We can pass multiple values by separating them with comma and semicolon. We can see the example in
+browser
+requests which have, Accept header. We can also name the property Cookie and pass the values separated by semicolons to
+it.
+
+### Writing Data to server
+
+We can write data on URL using POST and PUT methods. The `getOutputStream()` will aid us with it.
+A URLConnection doesn't allow output by default, so you have to call `setDoOutput(true)` before asking for an output
+stream.
+
+#### Example 7-14: posting a form
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class FormPoster {
+    private URL url;
+    // from Chapter 5, Example 5-8
+    private QueryString query = new QueryString();
+
+    public FormPoster(URL url) {
+        if (!url.getProtocol().toLowerCase().startsWith("http")) {
+            throw new IllegalArgumentException(
+                    "Posting only works for http URLs");
+        }
+        this.url = url;
+    }
+
+    public void add(String name, String value) {
+        query.add(name, value);
+    }
+
+    public URL getURL() {
+        return this.url;
+    }
+
+    public InputStream post() throws IOException {
+// open the connection and prepare it to POST
+        URLConnection uc = url.openConnection();
+        uc.setDoOutput(true);
+        try (OutputStreamWriter out
+                     = new OutputStreamWriter(uc.getOutputStream(), "UTF-8")) {
+// The POST line, the Content-type header,
+// and the Content-length headers are sent by the URLConnection.
+// We just need to send the data
+            out.write(query.toString());
+            out.write("\r\n");
+            out.flush();
+        }
+// Return the response
+        return uc.getInputStream();
+    }
+
+    public static void main(String[] args) {
+        URL url;
+        if (args.length > 0) {
+            try {
+                url = new URL(args[0]);
+            } catch (MalformedURLException ex) {
+                System.err.println("Usage: java FormPoster url");
+                return;
+            }
+        } else {
+            try {
+                url = new URL(
+                        "http://www.cafeaulait.org/books/jnp4/postquery.phtml");
+            } catch (MalformedURLException ex) { // shouldn't happen
+                System.err.println(ex);
+                return;
+            }
+        }
+        FormPoster poster = new FormPoster(url);
+        poster.add("name", "Elliott Rusty Harold");
+        poster.add("email", "elharo@ibiblio.org");
+        try (InputStream in = poster.post()) {
+// Read the response
+            Reader r = new InputStreamReader(in);
+            int c;
+            while ((c = r.read()) != -1) {
+                System.out.print((char) c);
+            }
+            System.out.println();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+}
+```
+
+All the things to be done:
+
+1. Decide what name-value pairs you’ll send to the server-side program.
+2. Write the server-side program that will accept and process the request. If it doesn't
+   use any custom data encoding, you can test this program using a regular HTML
+   form and a web browser.
+3. Create a query string in your Java program. The string should look like this: name1=value1&name2=value2&name3=value3
+4. Open a URLConnection to the URL of the program that will accept the data.
+5. Set doOutput to true by invoking setDoOutput(true).
+6. Write the query string onto the URLConnection’s OutputStream.
+7. Close the URLConnection’s OutputStream.
+8. Read the server response from the URLConnection’s InputStream.
+
+### Security Considerations for URLConnections
 
 
