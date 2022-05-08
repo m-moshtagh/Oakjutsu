@@ -432,4 +432,180 @@ All the things to be done:
 
 ### Security Considerations for URLConnections
 
+We only need to be aware that do we have permission to do the specific job we want. we can get the permission if there
+is
+by `getPermission()`.
 
+### Guessing MIME Media Types
+
+Java provides two methods to determine what is MIME type of content server is configured:
+
+* guessContentTypeFromName(String name)
+* guessContentTypeFromStream(InputStream in)
+
+The second one looks at 16 first bytes of the file and tries to guess the MIME type.
+
+### HttpURLConnection
+
+An abstract derived class of URLConnection which can't be instantiated directly because of protected constructor.
+however, we can open connection a URL and cast it to HttpURLConnection class.
+
+`URL u = new URL("http://lesswrong.com/");
+HttpURLConnection http = (HttpURLConnection) u.openConnection();`
+
+#### Request method
+
+HttpURLConnection uses GET method by default we can set others with `setRequestMethod()`. This class only supports:
+
+* GET
+* POST
+* DELETE
+* PUT
+* OPTIONS
+* TRACE
+* HEAD
+
+##### HEAD
+
+returns HTTP header. We can check if a file has been changed since last time it was cached.
+
+```java
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class LastModified {
+    public static void main(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            try {
+                URL u = new URL(args[i]);
+                HttpURLConnection http = (HttpURLConnection) u.openConnection();
+                http.setRequestMethod("HEAD");
+                System.out.println(u + " was last modified at "
+                        + new Date(http.getLastModified()));
+            } catch (MalformedURLException ex) {
+                System.err.println(args[i] + " is not a URL I understand");
+            } catch (IOException ex) {
+                System.err.println(ex);
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+##### TRACE
+
+We use this method to see if there's any proxy servers between client and server. if the server responses with the
+client
+headers there's no proxy in between.
+
+#### Closing connection
+
+Since HTTP 1.1 supports multiple requests over one tcp connection, we can explicitly `disconnect()` the connection and
+make sure next set of requests don't time out.
+
+#### Handling server responses
+
+We can get response message using `getResponseMessage()` and the code with `getResponseCode()`.
+
+##### Example 7-16: source viewer3
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class SourceViewer3 {
+    public static void main(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            try {
+// Open the URLConnection for reading
+                URL u = new URL(args[i]);
+                HttpURLConnection uc = (HttpURLConnection) u.openConnection();
+                int code = uc.getResponseCode();
+                String response = uc.getResponseMessage();
+                System.out.println("HTTP/1.x " + code + " " + response);
+                for (int j = 1; ; j++) {
+                    String header = uc.getHeaderField(j);
+                    String key = uc.getHeaderFieldKey(j);
+                    if (header == null || key == null) break;
+                    System.out.println(uc.getHeaderFieldKey(j) + ": " + header);
+                }
+                System.out.println();
+                try (InputStream in = new BufferedInputStream(uc.getInputStream())) {
+// chain the InputStream to a Reader
+                    Reader r = new InputStreamReader(in);
+                    int c;
+                    while ((c = r.read()) != -1) {
+                        System.out.print((char) c);
+                    }
+                }
+            } catch (MalformedURLException ex) {
+                System.err.println(args[0] + " is not a parseable URL");
+            } catch (IOException ex) {
+                System.err.println(ex);
+            }
+        }
+    }
+}
+```
+
+For error handling we can use `getErrorStream()` which returns null if we encounter error.
+
+##### Example 7-17 download a page with URLConnection
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class SourceViewer4 {
+    public static void main(String[] args) {
+        try {
+            URL u = new URL(args[0]);
+            HttpURLConnection uc = (HttpURLConnection) u.openConnection();
+            try (InputStream raw = uc.getInputStream()) {
+                printFromStream(raw);
+            } catch (IOException ex) {
+                printFromStream(uc.getErrorStream());
+            }
+        } catch (MalformedURLException ex) {
+            System.err.println(args[0] + " is not a parseable URL");
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+    }
+
+    private static void printFromStream(InputStream raw) throws IOException {
+        try (InputStream buffer = new BufferedInputStream(raw)) {
+            Reader reader = new InputStreamReader(buffer);
+            int c;
+            while ((c = reader.read()) != -1) {
+                System.out.print((char) c);
+            }
+        }
+    }
+}
+```
+
+#### Redirects
+
+We can choose to followed redirects if the content has been moved to a new location because this may have security risks.
+we have `getFollowRedirects()` & `setFollowRedirects(boolean follow)` which let us choose.
+
+#### Proxies
+
+we can check if the server is using proxy by `usingProxy()`.
+
+#### Streaming Mode
+
+For transferring really large contents Java provides two solutions:
+if you know the size of your data—for instance, you’re uploading a file of known size using
+HTTP PUT—you can tell the HttpURLConnection object the size of that data. If you don’t
+know the size of the data in advance, you can use chunked transfer encoding instead.
+In chunked transfer encoding, the body of the request is sent in multiple pieces, each
+with its own separate content length.
+`setChunkedStreamingMode(int chunkLength)`
+This method is so risky that we should only use it when we need it because this goes in the way of authentication so, we
+need to retry again.
+if we know the exact length we can use:
+`setFixedLengthStreamingMode(long contentLength)`
