@@ -30,6 +30,20 @@
 ![springtest](../../pics/spt9.png)
 ![springtest](../../pics/spt10.png)
 
+## Spring Testing Context
+
+We want to use SpringApplicationContext to handle our objects and Junit features. We can `autowire` objects.
+
+### Setup
+
+We need to put `@SpringJunitConfiguration` annotation which provides needed annotations for us. We can pass
+Configuration
+classes to this annotation. These classes can be defined isolated or as inner classes.
+
+WE can use `@ActiveProfile` and `@Profile` for using profiles for tests.
+
+We can also use `@TestPropertySource` for external properties.
+
 ## Spring MVC Tests
 
 ### MockMVC
@@ -45,17 +59,14 @@ Now we pass the test subject to it and build. We use perform method and pass the
 andExpect() method to it.
 
 ```java
-MockMVC mockmvc = MockMVCBuilders.standAloneSetup(controller).build();
-mockmvc.perform(get("/")).andExpect(status.isOk()).andExpect(view().name("index"));
+MockMVC mockmvc=MockMVCBuilders.standAloneSetup(controller).build();
+        mockmvc.perform(get("/")).andExpect(status.isOk()).andExpect(view().name("index"));
 ```
 
 We can also chain model test with andExpect() function to test the Model attributes.
 
 ### Spring Integration Tests
 
-In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database 
+In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database
 operation we can use `@DataJPATest` which brings entity manager.
-
-## Spring Testing Context
-
 
