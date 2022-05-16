@@ -74,7 +74,8 @@ is visible with `docker ps` command.
 
 ## Docker machine
 
-We can use this tool to create a docker host on a computer or a cloud provider.
+We can use this tool to create a docker host on a computer or a cloud provider. This is for mac and windows which 
+need a virtual-machine to run docker.
 
 `docker-machine create --driver=virtualbox docker_host_name`<br/>
 Then we can configure docker client to talk to it, create and pull images, start, stop and restart containers and 
@@ -86,3 +87,55 @@ After creation, we can give it a docker cli:
 regular stuff with it.
 ![docker machine](./pics/dockermachine1.png)
 ![docker machine](./pics/dockermachine2.png)
+
+## Workflow for Java developers
+
+We can configure maven plugin to update docker image after every push and also run the test in docker image and push
+it in a registry.
+
+### Docker maven plugin
+
+We can pick up a docker maven plugin, and configure it to build an image for us on maven build phase and start the
+container on installation phase. Arun gupta recommends io.fabric8 docker plugin. Spotify has one too which is inactive.
+
+## Docker Compose
+
+In an application we have webserver, database server, messaging server and lots of other components and, we need each
+scale up and down. This is where docker compose comes in the game.
+
+We define configuration in one or more files which the default is `docker-compose.yml`. We can override the default
+using `docker-compose.override.yml`.
+
+We can also have multiple files specified using -f.
+
+> This is really great for dev, staging and CI
+
+![docker compose](./pics/dockercompose1.png)
+![docker compose](./pics/dockercompose2.png)
+![docker compose](./pics/dockercompose3.png)
+![docker compose](./pics/dockercompose4.png)
+
+### Why override?
+
+![docker compose override](./pics/override1.png)
+![docker compose override](./pics/override2.png)
+
+In order to make sure one image is started before the other we use `depend on:` and specify the name container_name.
+
+We can fire up docker compose using `docker-compose up -d`. 
+
+> We always should remember to check docker-machine on Windows and Mac.
+
+## Docker Swarm
+
+All We checked so far is single host docker. now we are going for multi docker host deployment. Single is bad because
+We would only  have a single point of failure. 
+
+* Docker swarm gives us Native Clustering for Docker
+* Provides a unified interface to a pool of Docker hosts
+* Fully integrated with machine and compose
+* Serves standard docker API
+
+![Docker swarm](./pics/swarm1.png)
+![Docker swarm](./pics/swarm2.png)
+![Docker swarm](./pics/swarm3.png)
