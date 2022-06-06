@@ -5,7 +5,8 @@ import com.google.common.base.Objects;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
-
+// TODO Mockito learning
+// TODO Complete Inheritance and Builder for lombok.md
 @Entity
 @Table(name = "jakartaEntity")
 public class JakartaEntity {

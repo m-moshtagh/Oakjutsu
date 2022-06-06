@@ -67,6 +67,12 @@ In order to test if a method throws the correct exception we can use assertThrow
 assertThrows(RuntimeException.class, () -> Class.function())
 ```
 
+#### Test execution Order
+
+We can define order for execution of test class methods. We define `@TestMethodOrder` on class scope and pass the
+`MethodOrderer.OrderAnnotation.class` Then we can annotate each method with `@Order()` and pass number order to them.
+Then We can be sure that the test methods are executed in the defined order.
+
 #### Testing Timeouts
 
 We mostly work with two functions:
@@ -82,8 +88,14 @@ We can Classify tests with some annotation that apply a  rule on test method. fo
 
 ### Junit Assumptions
 
-Assumptions check an optional condition for example if we are running a specific environment like CI server or checking a system environment.
-`assertTrue()`
+Assumptions check an optional condition for example if we are running a specific environment like CI server or checking
+a system environment or if the object is null do that and do this. The difference is that when condition in assertion 
+is not met the test get aborted. but in assumption tests will be skipped. These are really useful for conditional 
+tests.
+```java
+assumingThat(fooType != null, () -> assertTrue(bar == bar!));
+```
+`assumTrue()` & `assumFalse()` are other methods we can use.
 
 ### Using AssertJ wih Junit
 
@@ -101,7 +113,8 @@ Tags are for classifying tests and can be applied at class level or method level
 
 ### Junit Nested Test
 
-To organize Big test classes even more convenient, we can create inner classes and mark them with @Nested. This is a much better way to classify Big test classes with lots of features.
+To organize Big test classes even more convenient, we can create inner classes and mark them with `@Nested`. 
+This is a much better way to classify Big test classes with lots of features.
 
 ### Junit Test interfaces
 
