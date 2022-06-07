@@ -80,6 +80,8 @@ Then We can be sure that the test methods are executed in the defined order.
 
 #### Testing Timeouts
 
+We can annotate methods & Class with `@Timeout` which accepts two parameters: value and unit.
+
 We mostly work with two functions:
 
 * assertTimeout(): Assert the execution of the supplier before given time exceeded.
@@ -173,6 +175,11 @@ We can create a Class which returns these arguments and pass it to method with `
 to create a class which implements `ArgumentsProvider` from jupiter and implement the provideArguments method.
 
 We can also create Junit tests and extend them using `@ExtendWith()`
+
+### parallel execution Tests
+
+in order to execute tests concurrently we need a junit-platform.properties file and add two option to it. Then we'll
+need to annotate class with `@Execution(ExecutionMode.CONCURRENT)`
 
 ## Junit 4 vs Junit 5
 
