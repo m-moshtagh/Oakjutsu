@@ -1,6 +1,7 @@
 # Mockito
 
-Mockito is a testing framework which aids us to create mock objects.
+Mockito is a testing framework which aids us by creating mocks from dependency objects so, we don't bother creating
+exact objects from collaborator objects.
 
 ## What is Mockito?
 
@@ -9,13 +10,22 @@ Mockito is a testing framework which aids us to create mock objects.
 ![mockito](../pics/mockito3.png)
 ![mockito](../pics/mockito4.png)
 
-For dependencies we need mockito-core & mockito-jupiter.
+For installation, we need mockito-core & mockito-jupiter.
+
+### Test Doubles
+
+* Dummy: Objects not use in test, just fills the holes and keeps the compiler happy.
+* Fake: lightweight example of object which is not suitable for production, like in memory db and fake web service
+* Stub: provides canned answers, not intelligent enough to respond with anything, These can be hardcoded or configurable
+* Spy: More intelligent stub, keeps track of how it was used, also helps with verification.
+* Mocks: Use expectations, can fail the test if unexpected calls are made, The focus is on behavior verification. 
 
 ## Usage
 
 ### Create inline mocks
 
-We can use static method `mock(dpendant.class)` This will return mock object with default values.
+We can use static method `mock(dpendant.class)` to initialize Dependencies in our test class and then pass them to
+the main class in setup method.
 
 ### Create mocks with annotation
 
@@ -40,7 +50,7 @@ Mockito verify method accepts two arguments:
 
 * mock object
 * time
-  
+
 Then we chain the verify method with the function call. this will make sure how many times the method is invoked.
 
 `verify(mockObject, times(2)).delete()`
@@ -53,7 +63,8 @@ instead of times we also can call methods:
 
 ### Returning values from Mocks
 
-In order to do that we call when() and pass the mock object with the proper method call and chain then() and give the type it should return.
+In order to do that we call when() and pass the mock object with the proper method call and chain then() and give the
+type it should return.
 
 `when(repository.findById(1L)).thenReturn(ReturnType)`
 Then we call the function above, and we can assert test the return type.
@@ -72,16 +83,16 @@ There are some methods like any(), anyLong(), etc. That we can use in our verify
 
 ```java
 // given
-Model model = new Model();
-given(Repositoru.function()).willReturn(Optional.of(Model));
+Model model=new Model();
+        given(Repositoru.function()).willReturn(Optional.of(Model));
 
 // when
-var foo = service.function();
+        var foo=service.function();
 
 // then
 // assertion test
-then(repository).should().function();
-then(repository).shouldHaveNoMoreInteractions();
+        then(repository).should().function();
+        then(repository).shouldHaveNoMoreInteractions();
 ```
 
 ## Advanced Mockito
@@ -93,7 +104,7 @@ in regular or BDD way.
 
 ### Filter using lambda
 
-In our given statement, we can use `argThat()` function and pass lambda which can filter the input argument of the 
+In our given statement, we can use `argThat()` function and pass lambda which can filter the input argument of the
 function we are trying to call.
 
 ### Argument Capture
@@ -103,4 +114,4 @@ In order to use argument capture we can create a field annotated with `@Captor` 
 
 ### Mockito Answers
 
->NOt GOOD EXPLANATION, GOTTA LEARN Later!
+> NOt GOOD EXPLANATION, GOTTA LEARN Later!
