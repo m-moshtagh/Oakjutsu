@@ -18,7 +18,7 @@ For installation, we need mockito-core & mockito-jupiter.
 * Fake: lightweight example of object which is not suitable for production, like in memory db and fake web service
 * Stub: provides canned answers, not intelligent enough to respond with anything, These can be hardcoded or configurable
 * Spy: More intelligent stub, keeps track of how it was used, also helps with verification.
-* Mocks: Use expectations, can fail the test if unexpected calls are made, The focus is on behavior verification. 
+* Mocks: Use expectations, can fail the test if unexpected calls are made, The focus is on behavior verification.
 
 ## Usage
 
@@ -43,6 +43,60 @@ Our class has some dependencies like repositories, We do as below:
 * Create The current Class instance and annotate it with `@InjectMocks`.
 
 This will inject all mocks into the current class instance.
+
+#### mocking example
+
+```java
+package com.dogigiri.onepiece.model.service;
+
+import com.dogigiri.onepiece.model.entity.Crew;
+import com.dogigiri.onepiece.model.entity.Pirate;
+import com.dogigiri.onepiece.model.entity.enumeration.Gender;
+import com.dogigiri.onepiece.model.entity.enumeration.Race;
+import com.dogigiri.onepiece.model.entity.enumeration.Rank;
+import com.dogigiri.onepiece.model.repository.PirateRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+@ExtendWith(MockitoExtension.class)
+class PirateRegularServiceTest {
+    Pirate pirate;
+    @Mock
+    PirateRepository repository;
+
+    @Mock
+    Crew crew;
+
+    @InjectMocks
+    PirateRegularService service;
+
+    @BeforeEach
+    void setUp() {
+        pirate = new Pirate().setFullName("Monkey D Luffy").setNickname("Straw hat").setAge(24).setGender(Gender.MALE)
+                .setRace(Race.HUMAN).setRank(Rank.CAPTAIN).setBounty(1_500_000_000L)
+                .setOccupation("Captain of Straw hat pirates").setCrew(crew);
+    }
+
+    @Test
+    @DisplayName("store pirate entity test")
+    public void storeTest() {
+        Mockito.when(repository.save(pirate)).thenReturn((Pirate) pirate.setId(1L).setUuid(UUID.randomUUID()));
+        service.store(pirate);
+        assertThat(pirate.getId()).isEqualTo(1L);
+    }
+}
+```
 
 ### Verify mocks Execution
 
@@ -71,9 +125,17 @@ Then we call the function above, and we can assert test the return type.
 
 ### Argument Matcher
 
+This feature increases flexibility for method stubbing. It's useful when we are not interested in the values of
+arguments or when we want to define a return value for range of arguments.
 There are some methods like any(), anyLong(), etc. That we can use in our verify statement.
 
+`Mockito.when(repository.save(any(Pirate.class))).thenReturn((Pirate) pirate.setId(1L).setUuid(UUID.randomUUID()));`
+
 `verify(mockObject, times(2)).delete(any(InputType.class))`
+
+> When we are mocking an object which takes several arguments we can use argument matchers for all of them, It is
+> essential to use argument matcher for all arguments or if we want to specify one of them precisely we can use
+> `eq()` and pass the value to it otherwise test will fail.
 
 ## Behavior Driven Mockito
 
@@ -99,8 +161,11 @@ Model model=new Model();
 
 ### Throw Exception
 
-in order to assert that the object handles exception correctly we can use mockito `willThrow()` & `doThrow()` functions.
+in order to assert that the object handles exception correctly we can use mockito `thenThrow` & `willThrow()`
+& `doThrow()` functions.
 in regular or BDD way.
+
+> We use thenThrow when we have return type and method explicitly throws exception. For void, we use doThrow() method.
 
 ### Filter using lambda
 
