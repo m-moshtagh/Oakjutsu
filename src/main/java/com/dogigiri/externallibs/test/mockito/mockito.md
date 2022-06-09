@@ -100,7 +100,10 @@ class PirateRegularServiceTest {
 
 ### Verify mocks Execution
 
-Mockito verify method accepts two arguments:
+Sometimes our functions have some functionality like calling a certain method, We can verify this behavior by mockito
+verify() method. Verify is usually redundant but, it is necessary on some purposes.  
+
+verify() method accepts two arguments:
 
 * mock object
 * time
@@ -143,6 +146,8 @@ There are some methods like any(), anyLong(), etc. That we can use in our verify
 ![BDDMOCITO](../pics/bddmock2.png)
 ![BDDMOCITO](../pics/bddmock3.png)
 
+We just replace (when thenReturn) with (given willReturn) and verify methods with (then should).
+
 ```java
 // given
 Model model=new Model();
@@ -175,7 +180,18 @@ function we are trying to call.
 ### Argument Capture
 
 In order to use argument capture we can create a field annotated with `@Captor` or create a local variable.
-`final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class)`
+`final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class)` and we pass it as an argument then
+we can assert it. Argument capture is a kind of special argument matcher.
+
+### Partial Mocks(Spies)
+
+We only use spies on classes which we know they will never change. We just annotate them with `@Spy`. Stubbing 
+spies with when() doesn't work. We should use doReturn() method instead.
+
+### Testing time
+
+First mockito can not help us test static methods we can use powermock framework. in case of time we can use
+Clock class and pass it to our LocalDateTime.now() cases. Then we can test it successfully.
 
 ### Mockito Answers
 
