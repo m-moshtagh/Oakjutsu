@@ -30,11 +30,25 @@
 ![springtest](../../pics/spt9.png)
 ![springtest](../../pics/spt10.png)
 
-## Spring Testing Context
+## Spring boot support for junit
+
+Spring provides tools to enhance the productivity of writing unit tests. Spring gives us three configurations:
+
+* SpringBootTest: Loads the application context into tests
+* MockMVC: comprehensive testing of controller units
+* Mockito Integration: @MockBean for easy mockito integration
+
+Also provides tool for testing third party backend resources:
+
+* DBUnit: Pre populate and clean up database between tests
+* MongoDB: manage MongoDB data
+* WireMock: simulate third party API responses
+
+### Spring Testing Context
 
 We want to use SpringApplicationContext to handle our objects and Junit features. We can `autowire` objects.
 
-### Setup
+#### Setup
 
 We need to put `@SpringJunitConfiguration` annotation which provides needed annotations for us. We can pass
 Configuration
@@ -44,13 +58,17 @@ WE can use `@ActiveProfile` and `@Profile` for using profiles for tests.
 
 We can also use `@TestPropertySource` for external properties.
 
-## Spring MVC Tests
+### Spring MVC Tests
 
-### MockMVC
+#### MockMVC
 
 Spring has a feature for testing controllers. Old days we had to bring the whole web server up for testing it, but
 now we can mock web server. Actually we are not going to mock web server, we just mock the dispatcher servlet.
-We can create MOCKMVC object with MockMVCBuilders which gives us two options:
+We can configure it in different ways:
+
+![MockMVC](../../pics/mockmvc1.png)
+![MockMVC](../../pics/mockmvc2.png)
+![MockMVC](../../pics/mockmvc3.png)
 
 * standalone which is for TDD
 * WebAppContext which is for BDD.
@@ -65,7 +83,53 @@ MockMVC mockmvc=MockMVCBuilders.standAloneSetup(controller).build();
 
 We can also chain model test with andExpect() function to test the Model attributes.
 
-### Spring Integration Tests
+### Service Layer test
+
+![MockMVC](../../pics/servicetest1.png)
+![MockMVC](../../pics/servicetest2.png)
+
+### Repository Layer test
+
+#### Using JDBC template
+
+![MockMVC](../../pics/repotest1.png)
+![MockMVC](../../pics/repotest2.png)
+![MockMVC](../../pics/repotest3.png)
+![MockMVC](../../pics/repotest4.png)
+![MockMVC](../../pics/repotest5.png)
+![MockMVC](../../pics/repotest6.png)
+![MockMVC](../../pics/repotest7.png)
+![MockMVC](../../pics/repotest8.png)
+
+#### Using spring Data for NOSQL database
+
+![MockMVC](../../pics/mongotest1.png)
+![MockMVC](../../pics/mongotest2.png)
+![MockMVC](../../pics/mongotest3.png)
+![MockMVC](../../pics/mongotest4.png)
+![MockMVC](../../pics/mongotest5.png)
+![MockMVC](../../pics/mongotest6.png)
+![MockMVC](../../pics/mongotest7.png)
+![MockMVC](../../pics/mongotest8.png)
+![MockMVC](../../pics/mongotest9.png)
+![MockMVC](../../pics/mongotest10.png)
+![MockMVC](../../pics/mongotest11.png)
+![MockMVC](../../pics/mongotest12.png)
+![MockMVC](../../pics/mongotest13.png)
+![MockMVC](../../pics/mongotest14.png)
+![MockMVC](../../pics/mongotest15.png)
+![MockMVC](../../pics/mongotest16.png)
+![MockMVC](../../pics/mongotest17.png)
+![MockMVC](../../pics/mongotest18.png)
+![MockMVC](../../pics/mongotest19.png)
+![MockMVC](../../pics/mongotest20.png)
+![MockMVC](../../pics/mongotest21.png)
+![MockMVC](../../pics/mongotest22.png)
+![MockMVC](../../pics/mongotest23.png)
+![MockMVC](../../pics/mongotest24.png)
+![MockMVC](../../pics/mongotest25.png)
+
+#### Spring Integration Tests
 
 In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database
 operation we can use `@DataJPATest` which brings entity manager.
