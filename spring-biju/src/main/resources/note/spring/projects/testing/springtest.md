@@ -129,7 +129,49 @@ We can also chain model test with andExpect() function to test the Model attribu
 ![MockMVC](../../pics/mongotest24.png)
 ![MockMVC](../../pics/mongotest25.png)
 
+### Testing using WireMock
+
+![MockMVC](../../pics/wiremock1.png)
+![MockMVC](../../pics/wiremock2.png)
+![MockMVC](../../pics/wiremock3.png)
+![MockMVC](../../pics/wiremock4.png)
+![MockMVC](../../pics/wiremock5.png)
+![MockMVC](../../pics/wiremock6.png)
+![MockMVC](../../pics/wiremock7.png)
+![MockMVC](../../pics/wiremock8.png)
+
 #### Spring Integration Tests
+
+![MockMVC](../../pics/integrationtest1.png)
+![MockMVC](../../pics/integrationtest2.png)
+![MockMVC](../../pics/integrationtest3.png)
+![MockMVC](../../pics/integrationtest4.png)
+![MockMVC](../../pics/integrationtest5.png)
+![MockMVC](../../pics/integrationtest6.png)
+![MockMVC](../../pics/integrationtest7.png)
+![MockMVC](../../pics/integrationtest8.png)
+![MockMVC](../../pics/integrationtest9.png)
+![MockMVC](../../pics/integrationtest10.png)
+![MockMVC](../../pics/integrationtest11.png)
+![MockMVC](../../pics/integrationtest12.png)
+![MockMVC](../../pics/integrationtest13.png)
+![MockMVC](../../pics/integrationtest14.png)
+![MockMVC](../../pics/integrationtest15.png)
+![MockMVC](../../pics/integrationtest16.png)
+![MockMVC](../../pics/integrationtest17.png)
+![MockMVC](../../pics/integrationtest18.png)
+![MockMVC](../../pics/integrationtest19.png)
+![MockMVC](../../pics/integrationtest20.png)
+![MockMVC](../../pics/integrationtest21.png)
+![MockMVC](../../pics/integrationtest22.png)
+![MockMVC](../../pics/integrationtest23.png)
+![MockMVC](../../pics/integrationtest24.png)
+![MockMVC](../../pics/integrationtest25.png)
+![MockMVC](../../pics/integrationtest26.png)
+![MockMVC](../../pics/integrationtest27.png)
+![MockMVC](../../pics/integrationtest28.png)
+![MockMVC](../../pics/integrationtest29.png)
+![MockMVC](../../pics/integrationtest30.png)
 
 In order to do some integration tests we annotate the class `@RunWIth(Spring.class)` and if it's a database
 operation we can use `@DataJPATest` which brings entity manager.
