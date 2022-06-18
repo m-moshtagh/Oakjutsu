@@ -2,6 +2,29 @@
 
 ---
 
+## Basic Concepts
+
+### History
+
+In old days we had one server per app. so, we had to acquire Big Strong servers so 
+most of the time the resources got wasted. Then VMare came with hypervisor solution 
+in order to allocate resources to multiple virtual machines. 
+But now we had the problem of that each vm was like a separated System which needed
+to be configured. The OS and all apps.
+
+This is where containers joined the game. We still had the big strong hardware but
+instead of hypervisor and multiple OSs we had One OS. Then on top of that we created
+containers for each app. Each container is a slice of the OS. 
+
+![docker intro](./pics/dockerintro1.png)
+
+Run a Container:
+
+* Download desired containerized app from docker hub as image
+* run the image with the options and BOOM magic happens
+
+Containers are the basic of microservice architecture, so we can say goodbye to good old monolithic applications.
+
 ## What is Docker?
 
 Docker is an Open Source software meant to give us ability to deploy our application everywhere.
