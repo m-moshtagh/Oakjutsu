@@ -6,15 +6,15 @@
 
 ### History
 
-In old days we had one server per app. so, we had to acquire Big Strong servers so 
-most of the time the resources got wasted. Then VMare came with hypervisor solution 
-in order to allocate resources to multiple virtual machines. 
+In old days we had one server per app. so, we had to acquire Big Strong servers so
+most of the time the resources got wasted. Then VMare came with hypervisor solution
+in order to allocate resources to multiple virtual machines.
 But now we had the problem of that each vm was like a separated System which needed
 to be configured. The OS and all apps.
 
 This is where containers joined the game. We still had the big strong hardware but
 instead of hypervisor and multiple OSs we had One OS. Then on top of that we created
-containers for each app. Each container is a slice of the OS. 
+containers for each app. Each container is a slice of the OS.
 
 ![docker intro](./pics/dockerintro1.png)
 
@@ -30,14 +30,14 @@ Containers are the basic of microservice architecture, so we can say goodbye to 
 Docker is an Open Source software meant to give us ability to deploy our application everywhere.
 
 Java gives us WORA(write once run anywhere) which we take the bytecode anywhere and JVM can run it. However, our
-application is combination of different tools, libs, OS etc. So for deployment we need all of them. Using Docker We 
+application is combination of different tools, libs, OS etc. So for deployment we need all of them. Using Docker We
 can package all of them and run them in one piece. PODA(package once deploy anywhere)
 
 ### Docker Mission
 
 At high perspective, docker mission is to Build, Ship and Run the application. Docker provides tools to serve this
 purpose. Result of this is a fully distributed application which can be run on cloud, datacenter and individual laptop.
-We just need a docker engine. 
+We just need a docker engine.
 
 ![Docker mission](./pics/dockermission.png)
 
@@ -57,25 +57,100 @@ Registry is where everybody pushes their image(dockerhub).
 
 ## Docker files & Images
 
-In docker the way we create an image is using a docker-compose file. It's a text file Dockerfile extension. We have 
-a bunch of commands we can use in it. 
-
-### Create a dockerfile
-
-We can use a base image using `FROM` command, `FROM ubuntu` will set ubuntu image as the base image. Docker Containers
-Are meant to do only one thing. Command `CMD` will set what that one thing going to be. We can have multiple CMDs. 
+In docker the way we create an image is using a dockerfile. Each image is built from base image which it goes like
+this till one parent is created from scratch image which is the equivalent of Object class in Java.
+Each command in dockerfile creates layers. Each layer is a readonly cache image which docker can use to create other
+images from them. Docker also adds a writable layer at top which allows to change configurations or run commands.
+This is why multiple containers have same characteristic but different configuration. After deleting container
+the writable layer will be deleted so, we can use Volumes or Bind mounts.
 
 ![Dockerfile commands](./pics/dockerfilecommands.png)
+
 ```Dockerfile
 FROM java
 COPY target/hello.jar /usr/src/hello.jar
 CMD java -cp /usr/src/hello.jar # or .example.App
 ```
 
+### Run helloWorld with docker
+
+We use for building this, we use bind mount and give jar file to it. If we have the bytecode Using a jre is enough.
+
+`docker run -v ${PWD}:/hello -w /hello openjdk:11.0.10-buster javac Hello.java`
+`docker run -v ${PWD}:/hello -w /hello openjdk:11.0.10-jre-buster java Hello`
+
+### Create a dockerfile to run simple jar file
+
+We can use a base image using `FROM` command, `FROM ubuntu` will set ubuntu image as the base image. We can use
+`RUN` command to execute a shell command. We can either type command or use array form:
+`RUN ["executable", "param1", "param2"]`
+using `WORKDIR` we can set working directory.
+using `COPY` command we can copy the jar file to the working directory. `ADD` can do the same but `COPY` is the
+most used case.
+using `EXPOSE` we can document which port is usable. So we can expose it in `docker run` command.
+We can set the initial command using `ENTRYPOINT` which we use it in array way to execute the final instruction.
+we can use Command `CMD` instead.
+
+Then we can build it using `docker build`.
+-f is for specifying dockerfile name and, it's not necessary if the file name is just dockerfile.
+we can use -t to specify image name.
+
+> We create a dockerignore file to exclude unnecessary files to add to context of docker image.
+> It's also mandatory to read the images dockerfiles so, we can understand how they work.
+
+### Create a dockerfile to run simple war file inside tomcat
+
+As we read the tomcat dockerfile we can understand that we need to copy the war file inside `${CATALINA_HOME}/webapps`
+so the tomcat can host the app.
+
+```Dockerfile
+FROM tomcat:9
+COPY web.war ${CATALINA_HOME}/webapps/root.war
+EXPOSE 8080
+ENTRYPOINT ["catalina.sh", "run"]
+```
+
+Then we just build and use it.
+
+### Create a dockerfile to run simple jar file using maven
+
+```Dockerfile
+FROM maven:3.6.3-jdk-11-slim
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src src
+RUN mvn package
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "target/api.jar"]
+```
+
+If we change the source code, and run it again we can see that dependencies are cached but after pom is
+modified it will download it again so, we need to use volume.
+
+`docker run -it --rm -v ${PWD}:/app -v ${HOME}/.m2:/root/.m2 -w /app maven:3.6.3-jdk-11-slim mvn clean package`
+
+### Create a dockerfile to run simple jar file using gradle
+
+```Dockerfile
+FROM gradle:jdk11
+USER gradle
+WORKDIR /app
+COPY --chown=gradle:gradle build.gradle .
+COPY --chown=gradle:gradle src src
+RUN gradle build
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "build/libs/api.jar"]
+```
+
+`docker run -it --rm -u gradle -v ${PWD}:/app -v ${HOME}/.gradle:/home/gradle/.gradle -w /app gradle:jdk11 gradle build`
+
+### Multi stage builds
+
 #### Dockerfile Best practices
 
 * Containers Should be ephemeral. Which means we should make sure there is no state stored in them. Databases are
-exception.
+  exception.
 * use .dockerignore file. We create a directory and put docker file and all the files which we want in the image.
 * Avoid installing unnecessary packages.
 * Run only one process per container.
@@ -97,12 +172,12 @@ is visible with `docker ps` command.
 
 ## Docker machine
 
-We can use this tool to create a docker host on a computer or a cloud provider. This is for mac and windows which 
+We can use this tool to create a docker host on a computer or a cloud provider. This is for mac and windows which
 need a virtual-machine to run docker.
 
 `docker-machine create --driver=virtualbox docker_host_name`<br/>
-Then we can configure docker client to talk to it, create and pull images, start, stop and restart containers and 
-upgrade Docker. 
+Then we can configure docker client to talk to it, create and pull images, start, stop and restart containers and
+upgrade Docker.
 
 After creation, we can give it a docker cli:
 
@@ -145,14 +220,14 @@ We can also have multiple files specified using -f.
 
 In order to make sure one image is started before the other we use `depend on:` and specify the name container_name.
 
-We can fire up docker compose using `docker-compose up -d`. 
+We can fire up docker compose using `docker-compose up -d`.
 
 > We always should remember to check docker-machine on Windows and Mac.
 
 ## Docker Swarm
 
 All We checked so far is single host docker. now we are going for multi docker host deployment. Single is bad because
-We would only  have a single point of failure. 
+We would only have a single point of failure.
 
 * Docker swarm gives us Native Clustering for Docker
 * Provides a unified interface to a pool of Docker hosts
