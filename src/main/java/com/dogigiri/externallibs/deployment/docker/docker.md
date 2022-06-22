@@ -25,7 +25,7 @@ Run a Container:
 
 Containers are the basic of microservice architecture, so we can say goodbye to good old monolithic applications.
 
-## What is Docker?
+### What is Docker?
 
 Docker is an Open Source software meant to give us ability to deploy our application everywhere.
 
@@ -55,7 +55,7 @@ Registry is where everybody pushes their image(dockerhub).
 
 ![Docker Workflow](./pics/dockerworkflow.png)
 
-## Docker files & Images
+## Dockerfiles & Images
 
 In docker the way we create an image is using a dockerfile. Each image is built from base image which it goes like
 this till one parent is created from scratch image which is the equivalent of Object class in Java.
@@ -94,6 +94,11 @@ we can use Command `CMD` instead.
 Then we can build it using `docker build`.
 -f is for specifying dockerfile name and, it's not necessary if the file name is just dockerfile.
 we can use -t to specify image name.
+
+![dockerfile](./pics/dockerram1.png)
+![dockerfile](./pics/dockerram2.png)
+![dockerfile](./pics/dockerram3.png)
+![dockerfile](./pics/dockerram4.png)
 
 > We create a dockerignore file to exclude unnecessary files to add to context of docker image.
 > It's also mandatory to read the images dockerfiles so, we can understand how they work.
@@ -147,7 +152,60 @@ ENTRYPOINT ["java", "-jar", "build/libs/api.jar"]
 
 ### Multi stage builds
 
-#### Dockerfile Best practices
+This enables us to define multiple intermediate images stages. The dockerfile can have multiple FROM instructions. Each
+starts with a new stage with new build context. We can copy to other stages using `--from` if we declare an alias for
+FROM instructions.
+
+#### MAVEN TOMCAT
+
+```Dockerfile
+FROM maven:3.6.3-jdk-11-slim AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src src
+RUN mvn package
+
+FROM tomcat:9
+COPY --from=build /app/target/web.war ${CATALINA_HOME}/webapps/root.war
+EXPOSE 8080
+ENTRYPOINT ["catalina.sh", "run"]
+```
+
+#### GRADLE TOMCAT
+
+```Dockerfile
+FROM gradle:jdk11 AS build
+USER gradle
+WORKDIR /app
+COPY --chown=gradle:gradle build.gradle .
+COPY --chown=gradle:gradle src src
+RUN gradle build
+
+FROM tomcat:9
+COPY --from=build /app/build/libs/web.war ${CATALINA_HOME}/webapps/root.war
+EXPOSE 8080
+ENTRYPOINT ["catalina.sh", "run"]
+```
+
+### Memory and CPU options in containers
+
+![dockerRam](./pics/dockerram5.png)
+![dockerRam](./pics/dockerram6.png)
+![dockerRam](./pics/dockerram7.png)
+![dockerRam](./pics/dockerram8.png)
+![dockerRam](./pics/dockerram9.png)
+![dockerRam](./pics/dockerram10.png)
+![dockerRam](./pics/dockerram11.png)
+![dockerRam](./pics/dockerram12.png)
+![dockerRam](./pics/dockerram13.png)
+![dockerRam](./pics/dockerram14.png)
+![dockerRam](./pics/dockerram15.png)
+![dockerRam](./pics/dockerram16.png)
+![dockerRam](./pics/dockerram17.png)
+![dockerRam](./pics/dockerram18.png)
+
+### Dockerfile Best practices
 
 * Containers Should be ephemeral. Which means we should make sure there is no state stored in them. Databases are
   exception.
@@ -156,7 +214,7 @@ ENTRYPOINT ["java", "-jar", "build/libs/api.jar"]
 * Run only one process per container.
 * Each instruction in image will create a layer and, we need to minimize the number of layers.
 
-#### Build & Run Image
+### Build & Run Image
 
 We can easily create an image from dockerfile by <br/>`docker build -t docker_image_name`<br/>
 We can also run it with <br/>`docker run -it docker_image_name`
@@ -191,10 +249,18 @@ regular stuff with it.
 We can configure maven plugin to update docker image after every push and also run the test in docker image and push
 it in a registry.
 
-### Docker maven plugin
+### Docker maven plugin fabric8
 
 We can pick up a docker maven plugin, and configure it to build an image for us on maven build phase and start the
-container on installation phase. Arun gupta recommends io.fabric8 docker plugin. Spotify has one too which is inactive.
+container on installation phase. io.fabric8 is the recommended docker plugin. Spotify has one too which is inactive.
+
+![fabric8](./pics/fabric81.png)
+![fabric8](./pics/fabric82.png)
+![fabric8](./pics/fabric83.png)
+![fabric8](./pics/fabric84.png)
+![fabric8](./pics/fabric85.png)
+
+### Docker Gradle plugin Palantir
 
 ## Docker Compose
 
