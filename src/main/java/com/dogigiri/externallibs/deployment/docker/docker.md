@@ -262,6 +262,32 @@ container on installation phase. io.fabric8 is the recommended docker plugin. Sp
 
 ### Docker Gradle plugin Palantir
 
+![pluntir](./pics/pluntir1.png)
+![pluntir](./pics/pluntir2.png)
+![pluntir](./pics/pluntir3.png)
+![pluntir](./pics/pluntir4.png)
+
+### Layered deployment with spring boot
+
+![](./pics/springdocker1.png)
+![](./pics/springdocker2.png)
+![](./pics/springdocker3.png)
+![](./pics/springdocker4.png)
+![](./pics/springdocker5.png)
+![](./pics/springdocker6.png)
+![](./pics/springdocker7.png)
+![](./pics/springdocker8.png)
+![](./pics/springdocker9.png)
+![](./pics/springdocker10.png)
+![](./pics/springdocker11.png)
+
+### Google JIB
+
+![](./pics/jib1.png)
+![](./pics/jib2.png)
+![](./pics/jib3.png)
+![](./pics/jib4.png)
+
 ## Docker Compose
 
 In an application we have webserver, database server, messaging server and lots of other components and, we need each
