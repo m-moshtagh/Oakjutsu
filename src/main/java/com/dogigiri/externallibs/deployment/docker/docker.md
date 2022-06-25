@@ -349,7 +349,20 @@ container on installation phase. io.fabric8 is the recommended docker plugin. Sp
 ## Docker Compose
 
 In an application we have webserver, database server, messaging server and lots of other components and, we need each
-scale up and down. This is where docker compose comes in the game.
+scale up and down. Also, we need to run each image with their specific options separately. This is where docker compose
+comes in the game. We write all configuration of the docker images and start and down them as a whole.
+docker-compose.yml is the name of the file.
+
+First, we need to specify version of the docker file inside " ". It should be compatible with docker engine. Then
+we define services which are the images that have dockerfile. we can use build to give the path of the dockerfile or
+use image to use an official image. We specify the ports in array form. We can also define environment variable
+and use other services name to make a URL for example database URL. each service is treated like a host on machine
+and can be used inside URL.
+
+We can also define volumes and use it inside services.
+
+We then use `docker-compose build` to build the project. We have several options like `--no-cache` which we always
+need to consider before building.
 
 We define configuration in one or more files which the default is `docker-compose.yml`. We can override the default
 using `docker-compose.override.yml`.
@@ -370,7 +383,7 @@ We can also have multiple files specified using -f.
 
 In order to make sure one image is started before the other we use `depend on:` and specify the name container_name.
 
-We can fire up docker compose using `docker-compose up -d`.
+We can fire up docker compose using `docker-compose up -d` and shut it down using `docker-compose down`.
 
 > We always should remember to check docker-machine on Windows and Mac.
 
