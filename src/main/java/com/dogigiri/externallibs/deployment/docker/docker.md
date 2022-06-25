@@ -66,11 +66,46 @@ the writable layer will be deleted so, we can use Volumes or Bind mounts.
 
 ![Dockerfile commands](./pics/dockerfilecommands.png)
 
+* FROM: This command allows to choose a base image for building our image on top of it.
+* COPY: Used to Copy directories and files to image.
+    * `COPY src /app` -> this command copies src directory to /app inside image and if not exists it will create it.
+    * We can copy multiple files or even use wildcards.
+    * We can wrap this command in an array which can be much readable and easier.
+* ADD:  Used to Copy directories and files to image With additional features from COPY.
+    * With add we can add file from a URL if we have access to it.
+    * If we pass a compressed file to this command ADD will automatically extract it.
+    * _Using COPY is best practice except we want to use the above features._
+* WORKDIR: If we specify a working directory all the commands we execute will run inside this directory.
+* RUN: We can execute any shell commands in the OS with this command.
+* ENV: We can set environment variables with this command for example URL that app needs.
+    * `ENV API_URL=http://localhost:8081/`
+* EXPOSE: In order to expose that what port the application is using inside container so, we should map it when we want
+  to run it.
+* USER: It's necessary to define a new user and group using RUN and then pass the username to this command so The
+  commands get executed using this user instead of ROOT.
+    * `RUN addgroup app && adduser -S -G app app` Then we use `USER app`
+    * This should be done on top of dockerfile so that we don't have permission problem.
+* CMD: With this command we can execute the last command that gets executed on container runtime. RUN is executed in
+  build time. We can only have One CMD command. It's best practice to use exec form in array so, it doesn't open another
+  shell.
+* ENTRYPOINT: This works like CMD but can not be overridden unless we use --entrypoint when running the container.
+
+> Docker has a layer structure so, every instruction creates a layer and when we change it docker will build it again.
+> So, in order to speed up our builds we should always take our instructions that are more stable to top and less stable
+> to down. For example, we should always separate the file and command that are related to dependencies of project and
+> source code that frequently changes.
+> So using COPY . . is not optimal.
+
 ```Dockerfile
 FROM java
 COPY target/hello.jar /usr/src/hello.jar
 CMD java -cp /usr/src/hello.jar # or .example.App
 ```
+
+### Tag image
+
+We can tag image explicitly with `image tag currentTag newTag` or when building image using -t when specifying name.
+We can also use docker image save and load commands to compress and move images to another computers.
 
 ### Run helloWorld with docker
 
@@ -227,6 +262,29 @@ For some tools like database, web servers which we may need a port we can run th
 
 We can also run it in detached mode with `-d` instead of `-it`. this will run the container in the background which
 is visible with `docker ps` command.
+
+### Docker Logs
+
+We can see the logs of a container using `Docker logs CONTAINER_ID`. There are various options available for this.
+
+### Execute command on running container
+
+we can do it using `exec` command. similar to run but run is for starting a new container.
+
+### Docker Volumes
+
+We can create volume using `docker volume` and use -v when using run command. this can help us create a permanent
+storage for our containers or share a storage between them.
+
+### Copy files between host and containers
+
+We can use `docker cp` to copy files between host and containers.
+
+### Bind map Volumes
+
+We change our source code often so, we don't want to build image everytime we make a change. We can bind directories
+using -v options. for example, `docker run -it -v {pwd}:/app` this will make sure that any file that changes is changed
+inside container.
 
 ## Docker machine
 
