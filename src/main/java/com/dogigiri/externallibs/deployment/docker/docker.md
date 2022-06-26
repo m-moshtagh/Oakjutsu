@@ -387,6 +387,24 @@ We can fire up docker compose using `docker-compose up -d` and shut it down usin
 
 > We always should remember to check docker-machine on Windows and Mac.
 
+### Docker network
+
+When working with docker-compose, it automatically creates a network and adds our containers on that network. When we
+start it we can see the networks using `docker network ls`. The new network will have hosts which are the services we
+defined inside yml file. These hosts can communicate using their names.
+
+Docker has an embedded DNS server that contains name and IP of the containers. Inside each container we have DNS
+resolver that communicates with DNS server and finds the IP address of the target containers.
+
+### Docker compose logs
+
+We can see the container's logs using `docker-compose logs` with various options. Logs for each service is accessible.
+
+### docker-compose Bind Volumes
+
+We had to specify absolute path when we tried to run container separately but here in yml file for each service we can
+specify volumes and give them relative path.
+
 ## Docker Swarm
 
 All We checked so far is single host docker. now we are going for multi docker host deployment. Single is bad because
