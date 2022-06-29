@@ -46,7 +46,7 @@ public class WithoutGeneric {
 }
 ```
 
-### Magic with generics
+### Magic with Generic Types
 
 Nowadays with generics we can define types with custom parameterized types for example a String arraylist or List of
 Products without defining ProductList class explicitly because in JDK `java.util.List` is a generic type.
@@ -65,18 +65,66 @@ public class withGeneric {
 }
 ```
 
-## Boundary types
-
-WE can also restrict our Generic classes by boundary types. we can extend Classes and interfaces.
-
-for example:
-`Generic<T extends Cloneable & Comparable>` -> this means only types that implement cloneable interface are allowed.
-
 ## Generic methods
 
-We can also define Generic methods which have benefits of not defining all parameters as Object.
-we can have multiple parameters in generic type separated by comma.
-we can have generic methods inside non-generic class
+Inside generic types methods can be defined using generic parameters to generalize the class. but we can have generic
+methods inside non-generic class and, also they can be applied to descendant classes constructors.
+
+For Non-generic classes we need to declare the type parameter before return type in method signature in order to use
+generic types correctly.
+
+```java
+import java.util.List;
+
+public class NonGenericType {
+    public static <T> int getSize(List<T> items) {
+        return items.size();
+    }
+}
+```
+
+## Boundary types
+
+WE can also restrict our Generic classes by boundary types.
+`extends` can be used to limit the type to the superclass and all it's descendants. We can also use `&` to define
+the types that implement multiple interfaces. (One class and multiple interfaces)
+In this combination class should be mentioned first.
+
+```java
+import java.util.Comparator;
+
+public class GenericTypeWithBoundary<T extends Number & Cloneable & Comparable<T>> {
+}
+
+```
+
+## Generic class Hierarchies
+
+Same as all non-generic classes and all inheritance rules apply on them.
+
+* subclass must pass type parameters to superclass
+* Generic subclass type can extend a non-generic type
+* Subclass can have more type parameters
+
+But the type argument hierarchies is not this straightforward and, requires exact match in type argument. For example,
+we can't pass List<Double> to the List<Number> and casting is not possible too.
+
+All these restrictions are relaxed with wildcards.
+
+## Type Erasure
+
+Compiled code has no generic type information. Generics only provide Safety checks at compile time and info is not
+available in bytecode.
+Java compiler replaces unbounded type parameters with object type.
+This is done because
+
+* maintain legacy code
+* no new classes are created for parameterized types
+* to ensure no runtime overhead
+
+We can see generic metadata in our .class files.
+
+## Bridge method
 
 ## ? wildcard
 
