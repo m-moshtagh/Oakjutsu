@@ -111,7 +111,9 @@ we can't pass List<Double> to the List<Number> and casting is not possible too.
 
 All these restrictions are relaxed with wildcards.
 
-## Type Erasure
+## Compile time notes
+
+### Type Erasure
 
 Compiled code has no generic type information. Generics only provide Safety checks at compile time and info is not
 available in bytecode.
@@ -124,9 +126,57 @@ This is done because
 
 We can see generic metadata in our .class files.
 
-## Bridge method
+### Bridge method
+
+When we create a generic method in bytecode level type parameters will be objected.
 
 ## ? wildcard
 
-is the wildcard we pass as a generic type. with this java crates a virtual class named CAPTURE#1, and it's like
-the object class. when ? extends a class we can only read values from it. but for writing it we should use super keyword
+This operator points to any unknown types. they can be applied to type of parameter, fields, local variables and return
+types.
+This operator can not be used in:
+
+* generic type instantiation
+* generic method invocation
+* super types
+
+There are three ways to use wildcards:
+
+* Unbounded: specified using only `?` operator and used when we don't want any reference to point to our parameter.
+
+```java
+public class Unbound {
+    public static int compare(Comparator<?> comparator) {
+        return 1;
+    }
+} 
+```
+
+* Upper bounded: We said hierarchy for type argument not going to work if they are not exactly the same. Upper bound
+  solves this problem when we use `extends` with `?` operator.
+
+```java
+public class UpperBound {
+    public static int compare(Box<? extends Fruite> fruitBox) {
+        return fruitBox.size;
+    }
+} 
+```
+
+* Lower bounded: This will include any classes that are in the super hierarchy of the type it's implemented via super
+  keyword
+  ![lower bounded wildcard](./wildcard/genericwildcard.png)
+
+Java crates a virtual class named CAPTURE#1, and it's like the object class. when ? extends a class we can only read
+values from it. but for writing it we should use super keyword.
+
+## Type parameter restrictions
+
+* We can not instantiate them : `T t = new T()`
+* We can not create static type
+* `instanceof` doesn't work because erasure will change the type unless we have unbound wildcards.
+* Can not create Arrays of parameterized types
+* method overloading with same erasure
+* Can't create Generic subclass of throwable.
+* Can't use type parameter inside catch clause. however, throws clause with type parameter works fine.
+  `public class GenericClass<T extends Throwable>{}`
