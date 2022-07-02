@@ -41,4 +41,35 @@ Predicate has a test() method. We can combine predicates using and(), or() and n
 if we have an already existed implementation of the functional interface we can only reference to it.
 the syntax is pretty simple. we write the instance name followed by :: and name of the method.
 
+## Functional Programming Design Concepts
+
+In functional programming we will treat functions like pure functions in mathematics. means:
+
+* They only do one thing
+* don't depend on anything except their arguments.
+* always give the same result
+
+Java is not so much functional oriented but it's not the language that makes programming functional, it's the way we
+code.
+
+### Single Responsibility
+
+This function issueRewards() has two jobs:
+
+![functional](./pics/functional1.png)
+
+We can split it into these two methods but the caller should always make sure to call methods consecutively.
+
+![functional](./pics/functional2.png)
+![functional](./pics/functional3.png)
+
+In Imperative way we maintain the state of Object inside the class but if we pass object as method parameter the caller
+should maintain the state of object.
+
+![functional](./pics/functional4.png)
+![functional](./pics/functional5.png)
+
+> void type is not applicable with void return type.
+
+### No side effects
 
