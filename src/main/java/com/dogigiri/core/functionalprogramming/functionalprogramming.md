@@ -73,3 +73,39 @@ should maintain the state of object.
 
 ### No side effects
 
+In mathematics a function can not depend on anything except their input. On another hand in programming a function
+can modify things out of its scope. When a method changes something out of its scope we call it side effect. In
+functional programming there are no side effects.
+
+* Mutation of variables
+* Printing to the console
+* Writing to file, Databases
+
+> The goal is not eliminating side effects, its actually eliminating observable side effects.
+
+The best to do is to split Data classes with Function classes. Data classes are just POJO with getter setter. and
+Function classes include the functions we want with the input of the Data class and they are usually static.
+
+### Referential Transparency
+
+When same input in a function results in different answer we call it referential transparency. its normal in OOP because
+of encapsulation. But in functional programming what we do is that we move the function to a different class and return
+new Object from it Which makes the input object **_Immutable_**.
+
+> To achieve referential transparency we need immutable data.
+
+### Pushing abstraction (Declarative programming)
+
+![functional](./pics/functional6.png)
+![functional](./pics/functional7.png)
+![functional](./pics/functional8.png)
+![functional](./pics/functional9.png)
+![functional](./pics/functional10.png)
+![functional](./pics/functional11.png)
+
+#### Summary
+
+![functional](./pics/functional12.png)
+![functional](./pics/functional13.png)
+![functional](./pics/functional14.png)
+![functional](./pics/functional15.png)
