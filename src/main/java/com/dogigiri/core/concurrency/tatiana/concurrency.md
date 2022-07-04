@@ -13,3 +13,5 @@ to others. This is done using `fork()` This splitting goes on till the workers c
 that we need to compose the result and `join()` does this. when task completes it waits for the task that created it
 to complete so, it can combine the results.
 ![](./pics/forkjoinpool1.png)
+![](./pics/forkjoinpool2.png)
+![](./pics/forkjoinpool3.png)
