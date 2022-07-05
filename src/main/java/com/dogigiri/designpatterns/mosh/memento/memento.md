@@ -9,8 +9,8 @@ will violate single responsibility.
 
 ## Solution
 
-![memento pattern](../pics/memento1.png)
-![memento pattern GOF](../pics/memento2.png)
+![memento pattern](../../pics/memento1.png)
+![memento pattern GOF](../../pics/memento2.png)
 
 What we do is to Create a Memento class which is responsible for the states of the class we want (Originator)
 THis class will have a composition relation with Caretaker class that has a Stack or List. With this pattern The 
