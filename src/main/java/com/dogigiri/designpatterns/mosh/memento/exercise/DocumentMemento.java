@@ -1,4 +1,4 @@
-package com.dogigiri.designpatterns.mosh.memento.exerceise;
+package com.dogigiri.designpatterns.mosh.memento.exercise;
 
 public class DocumentMemento implements Memento {
     private String content;
