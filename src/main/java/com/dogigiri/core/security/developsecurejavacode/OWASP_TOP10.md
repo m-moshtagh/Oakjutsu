@@ -71,7 +71,7 @@ when someone tries to send an unexpected invalid data to our application and tri
 > There are two ways to achieve this:
 
 * A whitelist of data that can be used as input
-* A blacklist of data that can't be used as input 
+* A blacklist of data that can't be used as input
 
 ![](../pics/sematec-SQLinjection8.png)
 ![](../pics/sematec-SQLinjection9.png)
@@ -79,4 +79,33 @@ when someone tries to send an unexpected invalid data to our application and tri
 
 ### Operating System Injection
 
+![](../pics/sematec-OSInjection1.png)
+![](../pics/sematec-OSInjection2.png)
+
+> It's always recommended to encode binary data when we want to transfer them.
+
+![](../pics/sematec-EncodeInjection.png)
+
+> We can also prevent this using OWASP ESAPI which provides encoders and commands for creating OS commands.
+
+![](../pics/sematec-ESAPI.png)
+
+### XPath injection in XML
+
+Xpath is used to search elements in XML files. invalid values can be injected in this. We can prevent this using Xpath
+Variable Resolver.
+
+![](../pics/sematec-XpathInjection1.png)
+![](../pics/sematec-XpathInjection2.png)
+
+### Log Injection
+
+Happens when we have untrusted value in our logging system. For example attacker tries to enter a log to our system.
+injecting Carriage Return or LF and then adding untrusted message.
+
+to prevent this we can simply limit input value and ban CRLF characters.
+
+![](../pics/sematec-LogInjection1.png)
+![](../pics/sematec-LogInjection2.png)
+![](../pics/sematec-LogInjection3.png)
 
