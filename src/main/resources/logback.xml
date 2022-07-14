@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+
+    <conversionRule conversionWord="crlf"
+                    converterClass="org.owasp.security.logging.mask.CRLFConverter"/>
+
+    <!--    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--        <file>App.log</file>-->
+    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+    <!--            <fileNamePattern>App-%i.log</fileNamePattern>-->
+    <!--            <minIndex>1</minIndex>-->
+    <!--            <maxIndex>10</maxIndex>-->
+    <!--        </rollingPolicy>-->
+    <!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+    <!--            <maxFileSize>5MB</maxFileSize>-->
+    <!--        </triggeringPolicy>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%relative [%thread] %-5level %logger{35} - %crlf(%-500msg)\n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+
+    <!--    <root level="debug">-->
+    <!--        <appender-ref ref="RollingFile"/>-->
+    <!--    </root>-->
+
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+            <pattern>%relative [%thread] %-5level %logger{35} - %crlf(%-5msg)\n</pattern>
         </encoder>
     </appender>
-
-    <logger name="com.dogigiri" level="trace"/>
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>
