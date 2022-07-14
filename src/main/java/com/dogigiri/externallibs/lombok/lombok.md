@@ -14,3 +14,8 @@ Lombok is an island near Java island. This project helps us get rid of boilerpla
 ![Lombok](./pics/lombok7.png)
 ![Lombok](./pics/lombok8.png)
 ![Lombok](./pics/lombok9.png)
+
+## Lombok annotations to avoid in entity classes specially with JPA
+
+We mostly need to avoid using `@Data`, `@EqualsAndHashCode`, `@ToString`. For toString we need to exclude our
+collections to avoid getting a lazy fetch type exception.
