@@ -1,7 +1,5 @@
-package com.dogigiri.controller;
+package com.dogigiri.core.security.developsecurejavacode.injection.sql;
 
-import com.dogigiri.entity.Customer;
-import com.dogigiri.repository.CustomerDa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
