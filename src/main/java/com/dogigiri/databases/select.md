@@ -153,6 +153,57 @@ NOTE: for insensitive cast we can use LIKE keyword.
 > SELECT coalesce(state, 'No State') as "State" FROM customers
 > WHERE phone::text LIKE '302%';
 
+#### Filtering using REGEXP operator
+
+We can use `REGEXP` instead of `LIKE` and pass regular expression to match String values.
+
+```roomsql
+SELECT * FROM sql_store.customers c 
+	WHERE c.first_name REGEXP "ELKA|AMBUR";
+```
+
+```roomsql
+SELECT * FROM sql_store.customers c 
+	WHERE c.last_name  REGEXP "EY$|ON$";
+```
+
+```roomsql
+SELECT * FROM sql_store.customers c 
+	WHERE c.last_name  REGEXP "^MY|SE";
+```
+
+```roomsql
+SELECT * FROM sql_store.customers c 
+	WHERE c.last_name  REGEXP "B[RU]";
+```
+
+#### Sort using ORDER BY
+
+We can SORT our result with `ORDER BY` keyword. by default the queries are sorted with PK in ascending order. We can
+sort with multiple parameters. In MYSQL we can also filter certain columns but sort them with other columns in table,
+however This is not applicable in other databases, you can only sort via columns you have filtered.
+
+```roomsql
+SELECT *, quantity * unit_price AS total_price
+	FROM sql_store.order_items oi 
+	WHERE oi.order_id = 2 ORDER BY total_price DESC;
+```
+
+> We can also pass numbers to ORDER BY indicating the columns we have filtered base in precedence. This is not best
+> practice because the sorting will change if we modify query.
+
+```roomsql
+SELECT name, age FROM person ORDER BY 1, 2 ASC;
+```
+
+#### LIMIT queries
+
+We can Limit number of rows in result using `LIMIT` keyword. This LIMIT can optionally accept two numbers that indicate
+offset. We can use this in pagination.
+
+For example, we want 1-3 in first page and 3-6 in second and 6-9 in third page. offset should be the number which we
+want to skip. for third page we need to pass `LIMIT 6, 3` which ignores first 6 results and shows three next results.
+
 ### Functions:
 
 We have two kinds of functions: Aggregate and Scalar. Aggregate functions take all the data and produce one result. like
