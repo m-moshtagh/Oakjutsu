@@ -52,7 +52,7 @@ when someone tries to send an unexpected invalid data to our application and tri
 > We should always use preparedStatements instead of statements in order to parameterize our queries.
 
 ![](../pics/sematec-SQLinjection2.png)
-![](../pics/sematec-SQLinjection3.png)
+![](../pics/sematec-SQLinjection3.png)  
 ![](../pics/sematec-SQLinjection4.png)
 
 > When using JPA specification frameworks we need to use parameterized queries which are defined using `=: varName` This
@@ -224,3 +224,20 @@ When we're trying to deserialize an untrusted object we have to use whitelist me
 ![](../pics/sematec-cipher4.png)
 ![](../pics/sematec-rsa1.png)
 ![](../pics/sematec-rsa2.png)
+
+### SecureRandom vs Random
+
+In order to generate IV or initialize keyGenerator we use SecureRandom class.
+
+* `java.util.Random` class uses LOG algorithm which is not cryptographically strong(it is predictable)
+  however,`java.security.SecureRandom` uses SHA1PRNG algorithm
+* Random class has 48 bits but SecureRandom can have up to 128 bits.
+* Random uses system clock as seed but, SecureRandom takes random data from OS. usually timing of I/O events mostly
+  from/dev/random
+* 2^48 attempts need to break random but, 2^128 for SecureRandom
+* SecureRandom consumes more memory than Random.
+
+Links:
+
+* [Baeldung](https://www.baeldung.com/java-secure-random)
+* [Techie delight](https://www.techiedelight.com/difference-java-util-random-java-security-securerandom/)
