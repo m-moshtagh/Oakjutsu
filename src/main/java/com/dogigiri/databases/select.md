@@ -230,3 +230,131 @@ sum(). Scalar functions run against each individual record So we get multiple ou
 ### Comments:
 
 We can put single line comments with -- at the beginning of the line. We can also use `*/  */` for multiline comments.
+
+## Joins
+
+When we have relationships between our tables for example in customer table we have order_id we can access the other
+table's data in our queries using join keyword.
+
+### Inner join
+
+Inner keyword is optional we can only use join and then `ON` with the fields that the join can happen base on them.
+
+```roomsql
+SELECT o.order_code, c.customer_name FROM orders o JOIN cutomers c
+    ON o.customer_id = c.customer_id;
+```
+
+> If we are joining tables across multiple databases, We need to prefix database name with also aliases.
+
+### Self join
+
+We can also join a table with itself. The syntax is same as above but the different is that we have same database name,
+and we need to have different aliases for each of them.
+For example, We have employee table that hierarchy of employees is there with column reports_to. We can use self join
+to list the manager's name for each person.
+
+```roomsql
+SELECT e.employee_id, e.employee_name, m.employee_name AS manager
+    FROM employees e JOIN employees m
+    ON e.reports_to = m.employee_id
+```
+
+#### JOIN more than two tables
+
+```roomsql
+SELECT p.payment_id, c.name, pm.name  FROM payments p 
+    JOIN clients c ON p.client_id = c.client_id 
+    JOIN payment_methods pm ON p.payment_method = pm.payment_method_id;
+```
+
+#### Compound join conditions
+
+Sometimes we might have two primary keys in a table. When we want to join this kind of tables we need to provide two
+conditions which we call compound join conditions.
+
+```roomsql
+SELECT * FROM order_items oi JOIN order_item_notes oin
+    ON oi.order_id = oin.order_id
+    AND oi.product_id = oin.product_id
+```
+
+### Implicit JOIN syntax
+
+We have another way to write these joins, and we just use their names in front of `FROM` and we provide the ON statement
+in `WHERE` clause.
+
+> It's not recommended to use this syntax.
+
+```roomsql
+SELECT * FROM products p, orders o
+    WHERE p.order_id = o.order_id;
+```
+
+### Outer Joins
+
+When we join two tables only records that meet the ON statement condition will be shown. But, if we want to show all
+tables from each side we can use LEFT/RIGHT outer joins.
+
+> OUTER keyword is also optional.
+
+```roomsql
+SELECT p.product_id, p.name, oi.quantity  FROM products p 
+	LEFT JOIN order_items oi ON p.product_id  = oi.product_id  ;
+```
+
+#### Multiple outer joins
+
+```roomsql
+SELECT o.order_id, o.order_date, os.name AS status, s.name AS shipper_name
+	FROM orders o 
+	LEFT JOIN order_statuses os ON o.status = os.order_status_id 
+	LEFT JOIN shippers s ON o.shipper_id = s.shipper_id ;
+```
+
+> We can also use self outer join if we want to see all records on individual table.
+
+### USING keyword
+
+Most of the time when we are joining tables, in `ON` statement we provide columns with same names. In these cases we can
+only use `USING` keyword and pass the column name to it. This will simplify the syntax. In case of compound primary keys
+We can pass columns in it and separate them with comma.
+
+```roomsql
+SELECT p.payment_id , c.name  AS client_name, pm.name AS payment_method 
+	FROM payments p  
+	JOIN clients c USING (client_id)
+	JOIN payment_methods pm ON p.payment_method = pm.payment_method_id ;
+```
+
+### Natural Joins
+
+MySQL gives us a feature that can join tables automatically base on their similar columns. However, this is not
+recommended.
+
+### Cross Joins
+
+This joins every column of one table with other table's columns. We also implicit and explicit syntax for this join.
+
+```roomsql
+SELECT * FROM payments p CROSS JOIN orders o
+```
+
+```roomsql
+SELECT * FROM payments, orders;
+```
+
+### UNION results
+
+We can combine query results with union keyword.
+
+```roomsql
+SELECT c.customer_id, c.first_name, c.points, 'Bronze'
+	FROM customers c WHERE c.points < 2000
+UNION 
+SELECT c.customer_id, c.first_name, c.points, 'Silver'
+	FROM customers c WHERE c.points BETWEEN 2000 AND 3000
+UNION 
+SELECT c.customer_id, c.first_name, c.points, 'Gold'
+	FROM customers c WHERE c.points > 3000
+```
