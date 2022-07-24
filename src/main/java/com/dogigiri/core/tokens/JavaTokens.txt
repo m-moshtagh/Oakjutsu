@@ -6,4 +6,4 @@ We can classify tokens to:
 * Special symbols ==> () [] {} ; * =
 * Operators ==> arithmetic, logical, bitwise and etc.
 
-All the above have different an unique meaning in Java.
+All the above have different a unique meaning in Java.

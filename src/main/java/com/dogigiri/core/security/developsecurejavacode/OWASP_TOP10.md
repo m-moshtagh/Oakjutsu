@@ -187,6 +187,9 @@ When we're trying to deserialize an untrusted object we have to use whitelist me
 ![](../pics/sematec-jce7.png)
 ![](../pics/sematec-jce8.png)
 ![](../pics/sematec-jce9.png)
+
+### Hashing algorithms
+
 ![](../pics/sematec-jce10.png)
 ![](../pics/sematec-jce11.png)
 ![](../pics/sematec-jce12.png)
@@ -224,6 +227,13 @@ When we're trying to deserialize an untrusted object we have to use whitelist me
 ![](../pics/sematec-cipher4.png)
 ![](../pics/sematec-rsa1.png)
 ![](../pics/sematec-rsa2.png)
+
+### PKCS standards
+
+These standards define how the key should be generated for various purposes. We have classes in java that can generate
+public or private key base on the standard we want.
+
+![](../pics/sematec-pkcs.png)
 
 ### SecureRandom vs Random
 
