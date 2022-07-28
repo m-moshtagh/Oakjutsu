@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.developsecurejavacode.encryption.aes;
+package com.dogigiri.core.security.developsecurejavacode.jce.encryption.aes;
 
 import org.slf4j.LoggerFactory;
 

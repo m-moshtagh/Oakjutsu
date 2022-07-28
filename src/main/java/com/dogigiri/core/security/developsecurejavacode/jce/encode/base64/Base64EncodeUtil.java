@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.developsecurejavacode.encode.base64;
+package com.dogigiri.core.security.developsecurejavacode.jce.encode.base64;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

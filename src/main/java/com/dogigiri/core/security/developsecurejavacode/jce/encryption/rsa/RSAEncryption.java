@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.developsecurejavacode.encryption.rsa;
+package com.dogigiri.core.security.developsecurejavacode.jce.encryption.rsa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

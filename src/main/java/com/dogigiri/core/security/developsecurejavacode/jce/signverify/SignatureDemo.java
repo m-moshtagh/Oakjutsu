@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.developsecurejavacode.signverify;
+package com.dogigiri.core.security.developsecurejavacode.jce.signverify;
 
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;

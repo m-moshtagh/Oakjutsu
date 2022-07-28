@@ -1,5 +1,6 @@
 package com.dogigiri.core.security.developsecurejavacode.encryption.rsa;
 
+import com.dogigiri.core.security.developsecurejavacode.jce.encryption.rsa.RSAEncryption;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

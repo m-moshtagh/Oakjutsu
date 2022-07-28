@@ -1,5 +1,6 @@
 package com.dogigiri.core.security.developsecurejavacode.encode.base64;
 
+import com.dogigiri.core.security.developsecurejavacode.jce.encode.base64.Base64EncodeUtil;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 

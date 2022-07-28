@@ -1,5 +1,6 @@
 package com.dogigiri.core.security.developsecurejavacode.encryption.aes;
 
+import com.dogigiri.core.security.developsecurejavacode.jce.encryption.aes.AESEncryption;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
