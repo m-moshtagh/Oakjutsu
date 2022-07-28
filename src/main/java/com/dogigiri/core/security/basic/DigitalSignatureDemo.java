@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.cryptography;
+package com.dogigiri.core.security.basic;
 
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;

@@ -1,4 +1,4 @@
-package com.dogigiri.core.security.cryptography;
+package com.dogigiri.core.security.basic;
 
 import org.apache.commons.codec.binary.Hex;
 
